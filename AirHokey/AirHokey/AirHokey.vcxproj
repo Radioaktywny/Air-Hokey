@@ -20,11 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Gracz.cpp" />
+    <ClCompile Include="Krazek.cpp" />
     <ClCompile Include="OknoGry.cpp" />
     <ClCompile Include="Plansza.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gracz.h" />
+    <ClInclude Include="Krazek.h" />
     <ClInclude Include="Plansza.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -24,6 +24,10 @@ void Plansza::rysuj(sf::RenderWindow* window)
 {
 	window->draw(boisko);	
 }
+bool Plansza::czyWplanszy(sf::CircleShape* object)
+{
+	return boisko.getGlobalBounds().intersects(object->getGlobalBounds());
+}
 Plansza::~Plansza()
 {
 

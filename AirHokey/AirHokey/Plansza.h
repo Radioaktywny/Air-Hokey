@@ -7,6 +7,7 @@ public:
 	Plansza(sf::Vector2f wymiary,sf::Color color);
 	~Plansza();
 	void rysuj(sf::RenderWindow* window);
+	bool czyWplanszy(sf::CircleShape * object);
 private:
 	sf::CircleShape polowaKolo;
 	sf::RectangleShape liniaSrodkowa;

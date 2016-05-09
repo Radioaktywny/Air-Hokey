@@ -24,12 +24,18 @@
     <ClCompile Include="Plansza.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Krazek.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gracz.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Plansza.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Krazek.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

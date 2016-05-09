@@ -20,3 +20,8 @@ void Gracz::rysuj(sf::RenderWindow * window)
 {
 	window->draw(this->krazek);
 }
+
+sf::CircleShape* Gracz::getShape()
+{
+	return &krazek;
+}

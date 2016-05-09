@@ -3,11 +3,13 @@
 #include<iostream>
 #include "Plansza.h"
 #include "Gracz.h"
+#include "Krazek.h"
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1600, 900), "Hockey", sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize); 
-	Plansza plansza(sf::Vector2f(1500, 800), sf::Color(100, 200, 200));
+	Plansza plansza(sf::Vector2f(1500, 600), sf::Color(100, 200, 200));
 	Gracz gracz1;
+	Krazek krazek;
 	//this while loop will only be called if the window is open.
 	while (window.isOpen())
 	{
@@ -28,7 +30,7 @@ int main()
 			case sf::Event::MouseLeft:
 				std::cout << "Mouse outisde the screen bounds" << std::endl;
 				break;
-			case sf::Event::MouseMoved:
+			case sf::Event::MouseMoved:				
 				gracz1.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
 				break;
 			}
@@ -36,6 +38,8 @@ int main()
 		}
 		window.clear();
 		plansza.rysuj(&window);
+		//if (plansza.czyWplanszy(gracz1.getShape()))
+		krazek.rysuj(&window);
 		gracz1.rysuj(&window);
 		window.display();
 

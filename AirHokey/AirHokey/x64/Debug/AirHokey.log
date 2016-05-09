@@ -1,0 +1,7 @@
+﻿  Plansza.cpp
+  OknoGry.cpp
+c:\users\marko\documents\visual studio 2015\projects\airhokey\airhokey\oknogry.cpp(32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Gracz.cpp
+  Generating Code...
+  AirHokey.vcxproj -> C:\Users\marko\Documents\Visual Studio 2015\Projects\AirHokey\x64\Debug\AirHokey.exe
+  AirHokey.vcxproj -> C:\Users\marko\Documents\Visual Studio 2015\Projects\AirHokey\x64\Debug\AirHokey.pdb (Partial PDB)

@@ -1,0 +1,4 @@
+﻿  OknoGry.cpp
+c:\users\marko\documents\visual studio 2015\projects\sfml\sfml\oknogry.cpp(32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  sfml.vcxproj -> C:\Users\marko\documents\visual studio 2015\Projects\sfml\x64\Debug\sfml.exe
+  sfml.vcxproj -> C:\Users\marko\documents\visual studio 2015\Projects\sfml\x64\Debug\sfml.pdb (Partial PDB)

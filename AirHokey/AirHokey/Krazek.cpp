@@ -21,8 +21,8 @@ void Krazek::init()
 	krazek.setPosition(this->start);
 	krazek.setRadius(50);
 	kierunek = sf::Vector2f(0, 0);
-	przyspieszenie = 1;
-	predkosc = 10;
+	przyspieszenie = 0.95;
+	
 }
 
 Krazek::~Krazek()
@@ -31,7 +31,7 @@ Krazek::~Krazek()
 
 void Krazek::setPredkosc(sf::Vector2f kierunek)
 {
-	this->kierunek = kierunek;
+	this->kierunek = sf::Vector2f(kierunek.x-krazek.getRadius(),kierunek.y-krazek.getRadius());
 }
 
 void Krazek::setPrzyspieszenie(float przyspieszenie)
@@ -39,14 +39,13 @@ void Krazek::setPrzyspieszenie(float przyspieszenie)
 	this->przyspieszenie = przyspieszenie;
 }
 
-void Krazek::setPredkosc(float predkosc)
-{
-	this->predkosc = predkosc;
-}
-
 void Krazek::move()
 {
-
+	
+	if(kierunek.x!=0&&kierunek.y!=0)
+	krazek.move(kierunek.x ,kierunek.y);
+	kierunek = kierunek*przyspieszenie;
+	//kierunek = sf::Vector2f(0, 0);
 }
 
 void Krazek::rysuj(sf::RenderWindow * window)
@@ -54,4 +53,11 @@ void Krazek::rysuj(sf::RenderWindow * window)
 	move();
 	window->draw(krazek);
 }
-
+sf::FloatRect Krazek::zwroc()
+{
+	return krazek.getGlobalBounds();
+}
+sf::Vector2f Krazek::getPredkosc()
+{
+	return sf::Vector2f(kierunek.x+krazek.getRadius(),kierunek.y+krazek.getRadius());
+}

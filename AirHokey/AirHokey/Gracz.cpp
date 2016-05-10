@@ -13,12 +13,18 @@ Gracz::~Gracz()
 
 void Gracz::move(sf::Vector2f dir)
 {
-	krazek.move((dir.x - krazek.getPosition().x) - krazek.getRadius(), (dir.y - krazek.getPosition().y) - krazek.getRadius());
+	this->kierunek = dir - krazek.getPosition();
+	krazek.move(kierunek.x - krazek.getRadius(), kierunek.y - krazek.getRadius());
 }
 
 void Gracz::rysuj(sf::RenderWindow * window)
 {
 	window->draw(this->krazek);
+}
+
+sf::Vector2f Gracz::getKierunek()
+{
+	return kierunek;
 }
 
 sf::CircleShape* Gracz::getShape()

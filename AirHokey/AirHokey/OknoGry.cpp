@@ -10,12 +10,19 @@ int main()
 	Plansza plansza(sf::Vector2f(1500, 600), sf::Color(100, 200, 200));
 	Gracz gracz1;
 	Krazek krazek;
+	sf::Clock clock;
+	sf::Time accumulator = sf::Time::Zero;
+	sf::Time ups = sf::seconds(1.f / 60.f);
 	//this while loop will only be called if the window is open.
 	while (window.isOpen())
 	{
 		//Define the event variable
 		sf::Event eventSF;
 		//Check if there is an event
+		while (accumulator > ups)
+		{
+			accumulator -= ups;			
+		}
 		while (window.pollEvent(eventSF))
 		{
 
@@ -30,18 +37,22 @@ int main()
 			case sf::Event::MouseLeft:
 				std::cout << "Mouse outisde the screen bounds" << std::endl;
 				break;
-			case sf::Event::MouseMoved:				
+			case sf::Event::MouseMoved:
 				gracz1.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
+				if (krazek.zwroc().intersects(gracz1.getShape()->getGlobalBounds()))
+					krazek.setPredkosc(gracz1.getKierunek());
 				break;
+			
 			}
-				
+
 		}
+		
 		window.clear();
 		plansza.rysuj(&window);
-		//if (plansza.czyWplanszy(gracz1.getShape()))
+		plansza.czyWplanszy(&krazek);
 		krazek.rysuj(&window);
 		gracz1.rysuj(&window);
 		window.display();
-
+		accumulator += clock.restart();
 	}
 }

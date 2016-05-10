@@ -9,11 +9,11 @@ public:
 	~Krazek();
 	void setPredkosc(sf::Vector2f kierunek);
 	void setPrzyspieszenie(float przyspieszenie);
-	void setPredkosc(float predkosc);
 	void rysuj(sf::RenderWindow * window);
+	sf::Vector2f getPredkosc();
+	sf::FloatRect zwroc();
 private:
 	sf::Vector2f kierunek;
-	float predkosc;
 	float przyspieszenie;
 	sf::Vector2f start;
 	sf::Color color;

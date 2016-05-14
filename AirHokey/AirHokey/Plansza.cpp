@@ -47,21 +47,21 @@ void Plansza::czyWplanszy(Krazek* object)
 	{
 		if (linieboczne[i].getGlobalBounds().intersects(object->zwroc()))
 		{
-			printf("WSZEDLEM");
 
 			if (i == 0 &&object->getPredkosc().y<0)
 			{
-				printf("dolna gorna");
 				object->setPredkosc(sf::Vector2f(object->getPredkosc().x, -1 * object->getPredkosc().y));
 			}
 			if (i == 1 && object->getPredkosc().y>0)
 			{
-				printf("dolna gorna");
 				object->setPredkosc(sf::Vector2f(object->getPredkosc().x, -1 * object->getPredkosc().y));
 			}
-			else
+			if(i==2 && object->getPredkosc().x<0)
 			{
-				printf("prawa lewa");
+				object->setPredkosc(sf::Vector2f(-1 * object->getPredkosc().x, object->getPredkosc().y));
+			}
+			if (i == 3 && object->getPredkosc().x > 0)
+			{
 				object->setPredkosc(sf::Vector2f(-1 * object->getPredkosc().x, object->getPredkosc().y));
 			}
 		}

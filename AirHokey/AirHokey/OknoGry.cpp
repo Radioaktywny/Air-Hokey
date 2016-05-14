@@ -39,14 +39,13 @@ int main()
 				break;
 			case sf::Event::MouseMoved:
 				gracz1.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
-				if (krazek.zwroc().intersects(gracz1.getShape()->getGlobalBounds()))
-					krazek.setPredkosc(gracz1.getKierunek());
-				break;
+			break;
 			
 			}
 
 		}
-		
+		if (krazek.zwroc().intersects(gracz1.getShape()->getGlobalBounds()))
+			krazek.setPredkosc(gracz1.getKierunek());
 		window.clear();
 		plansza.rysuj(&window);
 		plansza.czyWplanszy(&krazek);

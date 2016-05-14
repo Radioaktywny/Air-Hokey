@@ -21,7 +21,7 @@ void Krazek::init()
 	krazek.setPosition(this->start);
 	krazek.setRadius(50);
 	kierunek = sf::Vector2f(0, 0);
-	przyspieszenie = 0.95;
+	przyspieszenie = 0.99;
 	
 }
 
@@ -40,8 +40,12 @@ void Krazek::setPrzyspieszenie(float przyspieszenie)
 }
 
 void Krazek::move()
-{
-	
+{	
+	printf("%f x %f",kierunek.x,kierunek.y);
+	if (kierunek.x > 5)
+		kierunek.x = 5;
+	if (kierunek.y > 5)
+		kierunek.y = 5;
 	if(kierunek.x!=0&&kierunek.y!=0)
 	krazek.move(kierunek.x ,kierunek.y);
 	kierunek = kierunek*przyspieszenie;

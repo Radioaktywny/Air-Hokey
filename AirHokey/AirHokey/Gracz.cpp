@@ -14,7 +14,8 @@ Gracz::~Gracz()
 void Gracz::move(sf::Vector2f dir)
 {
 	this->kierunek = dir - krazek.getPosition();
-	krazek.move(kierunek.x - krazek.getRadius(), kierunek.y - krazek.getRadius());
+	this->kierunek=sf::Vector2f(kierunek.x-krazek.getRadius(),kierunek.y-krazek.getRadius());
+	krazek.move(kierunek.x , kierunek.y);
 }
 
 void Gracz::rysuj(sf::RenderWindow * window)

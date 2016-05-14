@@ -31,7 +31,7 @@ Krazek::~Krazek()
 
 void Krazek::setPredkosc(sf::Vector2f kierunek)
 {
-	this->kierunek = sf::Vector2f(kierunek.x-krazek.getRadius(),kierunek.y-krazek.getRadius());
+	this->kierunek = kierunek;
 }
 
 void Krazek::setPrzyspieszenie(float przyspieszenie)
@@ -59,5 +59,5 @@ sf::FloatRect Krazek::zwroc()
 }
 sf::Vector2f Krazek::getPredkosc()
 {
-	return sf::Vector2f(kierunek.x+krazek.getRadius(),kierunek.y+krazek.getRadius());
+	return kierunek;
 }

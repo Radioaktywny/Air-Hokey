@@ -31,8 +31,12 @@ void Plansza::initBoisko()
 	linieboczne[1].setPosition(sf::Vector2f( 50, wymiary.y+30));
 	linieboczne[2].setPosition(sf::Vector2f(50, 50));
 	linieboczne[3].setPosition(sf::Vector2f(wymiary.x+50, 50));
-
-
+	bramki[0].setFillColor(sf::Color::Red);
+	bramki[1].setFillColor(sf::Color::Red);
+	bramki[0].setSize(sf::Vector2f(20, wymiary.y/3+30));
+	bramki[1].setSize(sf::Vector2f(20, wymiary.y/3+30));
+	bramki[0].setPosition(50,wymiary.y/3);
+	bramki[1].setPosition(wymiary.x+50,wymiary.y/3);
 
 }
 void Plansza::rysuj(sf::RenderWindow* window)
@@ -40,6 +44,8 @@ void Plansza::rysuj(sf::RenderWindow* window)
 	window->draw(boisko);
 	for (int i = 0; i < 4; ++i)
 		window->draw(linieboczne[i]);
+	for (int i = 0; i < 2; ++i)
+		window->draw(bramki[i]);
 }
 void Plansza::czyWplanszy(Krazek* object)
 {
@@ -65,7 +71,18 @@ void Plansza::czyWplanszy(Krazek* object)
 				object->setPredkosc(sf::Vector2f(-1 * object->getPredkosc().x, object->getPredkosc().y));
 			}
 		}
+		if (i < 2)
+		{
+			if (bramki[i].getGlobalBounds().intersects(object->zwroc()))
+			{
+				object->gol(this->getSrodek());
+			}
+		}
 	}
+}
+sf::Vector2f Plansza::getSrodek()
+{
+	return sf::Vector2f(wymiary.x/2,wymiary.y/2);
 }
 Plansza::~Plansza()
 {

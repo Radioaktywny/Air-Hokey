@@ -1,4 +1,3 @@
 ﻿  Krazek.cpp
-c:\users\marko\source\repos\air-hokey\airhokey\airhokey\krazek.cpp(24): warning C4305: '=': truncation from 'double' to 'float'
   AirHokey.vcxproj -> C:\Users\marko\Source\Repos\Air-Hokey\AirHokey\x64\Debug\AirHokey.exe
   AirHokey.vcxproj -> C:\Users\marko\Source\Repos\Air-Hokey\AirHokey\x64\Debug\AirHokey.pdb (Partial PDB)

@@ -8,11 +8,13 @@ int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1600, 900), "Hockey", sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize); 
 	Plansza plansza(sf::Vector2f(1500, 600), sf::Color(100, 200, 200));
+	window.setMouseCursorVisible(false);
 	Gracz gracz1;
 	Krazek krazek;
 	sf::Clock clock;
 	sf::Time accumulator = sf::Time::Zero;
 	sf::Time ups = sf::seconds(1.f / 60.f);
+	sf::Vector2f myszka(0, 0);
 	//this while loop will only be called if the window is open.
 	while (window.isOpen())
 	{
@@ -39,16 +41,15 @@ int main()
 				break;
 			case sf::Event::MouseMoved:
 				gracz1.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
-			break;
-			
+			break;			
 			}
 
 		}
 		if (krazek.zwroc().intersects(gracz1.getShape()->getGlobalBounds()))
 			krazek.setPredkosc(gracz1.getKierunek());
-		window.clear();
-		plansza.rysuj(&window);
+		window.clear();		
 		plansza.czyWplanszy(&krazek);
+		plansza.rysuj(&window);
 		krazek.rysuj(&window);
 		gracz1.rysuj(&window);
 		window.display();

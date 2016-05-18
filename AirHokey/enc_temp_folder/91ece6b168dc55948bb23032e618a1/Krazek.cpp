@@ -49,13 +49,18 @@ void Krazek::move()
 		
 	krazek.move(kierunek.x ,kierunek.y);
 	}
-	else //lol i sie nie stackuje xd
+	else 
 	{
 		kierunek.x = 0.1f;
 		kierunek.y = 0.1f;
 	}
 }
 
+float Krazek::getX()
+{	
+	
+	return kierunek.x;
+}
 
 void Krazek::rysuj(sf::RenderWindow * window)
 {

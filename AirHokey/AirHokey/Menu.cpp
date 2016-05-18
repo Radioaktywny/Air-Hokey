@@ -7,6 +7,7 @@
 #include "Krazek.h"
 #include "Bot.h"
 #include "Menu.h"
+#include "Kolizje.h"
 sf::RenderWindow window(sf::VideoMode(1600, 900), "Hockey", sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize);
 Menu::Menu()
 {
@@ -155,24 +156,23 @@ void Menu::Singleplayer()
 					window.setMouseCursorVisible(true);
 				}
 				break;
-			case sf::Event::MouseEntered:
-				std::cout << "Mouse within screen bounds" << std::endl;
-				break;
-			case sf::Event::MouseLeft:
-				std::cout << "Mouse outisde the screen bounds" << std::endl;
-				break;
 			case sf::Event::MouseMoved:
 				gracz1.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
 				break;
 			}
-			
-
 		}
-			if (krazek.zwroc().intersects(gracz1.getShape()->getGlobalBounds()))
-				krazek.setPredkosc(gracz1.getKierunek());
-			if (krazek.zwroc().intersects(bot.getShape()->getGlobalBounds()))
-				krazek.setPredkosc(bot.getKierunek());
+		if (Kolizje::sprawdzKolizje(&gracz1.getShape(), &krazek.zwroc()))
+		{
+			sf::Vector2f odbicie = Kolizje::wyznaczPredkosc(&gracz1.getShape(), &krazek.zwroc());
+			krazek.setPredkosc(sf::Vector2f(gracz1.getKierunek().x + (krazek.getPredkosc().x*odbicie.x) + krazek.getPredkosc().x, gracz1.getKierunek().y + (krazek.getPredkosc().y*odbicie.y) + krazek.getPredkosc().y));
+		}
+		if (Kolizje::sprawdzKolizje(&bot.getShape(), &krazek.zwroc()))
+		{
+			sf::Vector2f odbicie = Kolizje::wyznaczPredkosc(&bot.getShape(), &krazek.zwroc());
+			krazek.setPredkosc(sf::Vector2f(bot.getKierunek().x + (krazek.getPredkosc().x*odbicie.x) + krazek.getPredkosc().x, bot.getKierunek().y + (krazek.getPredkosc().y*odbicie.y) + krazek.getPredkosc().y));
+		}
 			window.clear();
+			krazek.move();
 			plansza.czyWplanszy(&krazek);
 			plansza.rysuj(&window);
 			krazek.rysuj(&window);

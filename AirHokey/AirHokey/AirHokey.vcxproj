@@ -19,13 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bot.cpp" />
+    <ClCompile Include="Glowna.cpp" />
     <ClCompile Include="Gracz.cpp" />
     <ClCompile Include="Kolizje.cpp" />
     <ClCompile Include="Krazek.cpp" />
-    <ClCompile Include="OknoGry.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Plansza.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bot.h" />
     <ClInclude Include="Gracz.h" />
     <ClInclude Include="Kolizje.h" />
     <ClInclude Include="Krazek.h" />

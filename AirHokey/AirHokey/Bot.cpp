@@ -34,7 +34,7 @@
 		return kierunek;
 	}
 
-	sf::CircleShape* Bot::getShape()
+	sf::CircleShape Bot::getShape()
 	{
-		return &krazek;
+		return this->krazek;
 	}

@@ -21,12 +21,14 @@
   <ItemGroup>
     <ClCompile Include="Gracz.cpp" />
     <ClCompile Include="Krazek.cpp" />
-    <ClCompile Include="OknoGry.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Glowna.cpp" />
     <ClCompile Include="Plansza.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gracz.h" />
     <ClInclude Include="Krazek.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Plansza.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -80,12 +82,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>E:\sfml\SFML-2.3.2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\sfml\SFML-2.3.2\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\cos\Downloads\SFML-2.3.2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\cos\Downloads\SFML-2.3.2\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>E:\sfml\SFML-2.3.2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\sfml\SFML-2.3.2\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\cos\Downloads\SFML-2.3.2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\cos\Downloads\SFML-2.3.2\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

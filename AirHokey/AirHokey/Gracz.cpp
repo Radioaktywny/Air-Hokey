@@ -1,5 +1,7 @@
 #include "Gracz.h"
 #include "SFML/Graphics.hpp"
+
+
 Gracz::Gracz()
 {
 	this->krazek.setFillColor(sf::Color::Blue);

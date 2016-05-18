@@ -1,5 +1,9 @@
 ﻿  Menu.cpp
-c:\users\cos\source\repos\air-hokey\airhokey\airhokey\menu.cpp(71): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\cos\source\repos\air-hokey\airhokey\airhokey\menu.cpp(70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 c:\users\cos\source\repos\air-hokey\airhokey\airhokey\menu.cpp(165): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Gracz.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  Glowna.cpp
   AirHokey.vcxproj -> C:\Users\cos\Source\Repos\Air-Hokey\AirHokey\x64\Debug\AirHokey.exe
   AirHokey.vcxproj -> C:\Users\cos\Source\Repos\Air-Hokey\AirHokey\x64\Debug\AirHokey.pdb (Partial PDB)

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bot.cpp" />
     <ClCompile Include="Gracz.cpp" />
     <ClCompile Include="Krazek.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -26,6 +27,7 @@
     <ClCompile Include="Plansza.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bot.h" />
     <ClInclude Include="Gracz.h" />
     <ClInclude Include="Krazek.h" />
     <ClInclude Include="Menu.h" />

@@ -1,13 +1,12 @@
-#include "Menu.h"
 #include<SFML/Graphics.hpp>
 #include<string>
 #include<iostream>
+#include <iomanip>
 #include "Plansza.h"
 #include "Gracz.h"
 #include "Krazek.h"
-#include <iostream>
-#include <iomanip>
-
+#include "Bot.h"
+#include "Menu.h"
 sf::RenderWindow window(sf::VideoMode(1600, 900), "Hockey", sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize);
 Menu::Menu()
 {
@@ -121,6 +120,7 @@ void Menu::Singleplayer()
 {	
 	Plansza plansza(sf::Vector2f(1500, 600), sf::Color(100, 200, 200));
 	Gracz gracz1;
+	Bot bot; // bedzie botem
 	Krazek krazek;
 	sf::Time accumulator = sf::Time::Zero;
 	sf::Time ups = sf::seconds(1.f / 60.f);
@@ -170,10 +170,13 @@ void Menu::Singleplayer()
 		}
 			if (krazek.zwroc().intersects(gracz1.getShape()->getGlobalBounds()))
 				krazek.setPredkosc(gracz1.getKierunek());
+			if (krazek.zwroc().intersects(bot.getShape()->getGlobalBounds()))
+				krazek.setPredkosc(bot.getKierunek());
 			window.clear();
 			plansza.czyWplanszy(&krazek);
 			plansza.rysuj(&window);
 			krazek.rysuj(&window);
+			bot.rysuj(&window);//bot bedzie
 			gracz1.rysuj(&window);
 			window.display();
 			accumulator += clock.restart();

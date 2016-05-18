@@ -20,12 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Gracz.cpp" />
+    <ClCompile Include="Kolizje.cpp" />
     <ClCompile Include="Krazek.cpp" />
     <ClCompile Include="OknoGry.cpp" />
     <ClCompile Include="Plansza.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gracz.h" />
+    <ClInclude Include="Kolizje.h" />
     <ClInclude Include="Krazek.h" />
     <ClInclude Include="Plansza.h" />
   </ItemGroup>

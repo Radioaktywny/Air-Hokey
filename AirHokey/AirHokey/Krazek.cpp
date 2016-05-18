@@ -21,8 +21,7 @@ void Krazek::init()
 	krazek.setPosition(this->start);
 	krazek.setRadius(30);
 	kierunek = sf::Vector2f(0, 0);
-	maxpredkosc = 5;
-	
+	maxpredkosc = 10;
 }
 
 Krazek::~Krazek()
@@ -36,30 +35,28 @@ void Krazek::setPredkosc(sf::Vector2f kierunek)
 
 void Krazek::move()
 {	
-	printf("%f x %f",kierunek.x,kierunek.y);
+	//printf("%f x %f",kierunek.x,kierunek.y);
 	if (kierunek.x != 0 && kierunek.y != 0)
 	{
 		float predkosc = sqrtf(kierunek.x*kierunek.x + kierunek.y*kierunek.y);
 		if (predkosc > maxpredkosc)
 		{
-			kierunek.x = kierunek.x*maxpredkosc / predkosc;
-			kierunek.y = kierunek.y*maxpredkosc / predkosc;
+			kierunek.x = kierunek.x*0.95f;
+			kierunek.y = kierunek.y*0.95f;
 		}
 			
 		
 	krazek.move(kierunek.x ,kierunek.y);
 	}
-	//kierunek = sf::Vector2f(0, 0);
 }
 
 void Krazek::rysuj(sf::RenderWindow * window)
 {
-	move();
 	window->draw(krazek);
 }
-sf::FloatRect Krazek::zwroc()
+sf::CircleShape Krazek::zwroc()
 {
-	return krazek.getGlobalBounds();
+	return krazek;
 }
 void Krazek::gol(sf::Vector2f srodek)
 {

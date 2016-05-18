@@ -27,6 +27,9 @@
     <ClCompile Include="Krazek.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Kolizje.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gracz.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Krazek.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Kolizje.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -51,7 +51,7 @@ void Plansza::czyWplanszy(Krazek* object)
 {
 	for (int i = 0; i < 4;++i)
 	{
-		if (linieboczne[i].getGlobalBounds().intersects(object->zwroc()))
+		if (linieboczne[i].getGlobalBounds().intersects(object->zwroc().getGlobalBounds()))
 		{
 
 			if (i == 0 &&object->getPredkosc().y<0)
@@ -73,9 +73,9 @@ void Plansza::czyWplanszy(Krazek* object)
 		}
 		if (i < 2)
 		{
-			if (bramki[i].getGlobalBounds().intersects(object->zwroc()))
+			if (bramki[i].getGlobalBounds().intersects(object->zwroc().getGlobalBounds()))
 			{
-				object->gol(this->getSrodek());
+				//object->gol(this->getSrodek());
 			}
 		}
 	}

@@ -2,16 +2,32 @@
 
 
 #include "SFML/Graphics.hpp"
-
+#include <iostream>
 
 	
-	Bot::Bot()
+	
+	
+	Bot::Bot(std::string polowa)
 	{
 		this->krazek.setFillColor(sf::Color::Magenta);
 		this->krazek.setRadius(40);
-		this->krazek.setPosition(100, 100);
-	}
+		if (polowa == "prawo")
+		{
+			this->krazek.setPosition(1000, 500);
 	
+		}
+		else
+		{
+			this->krazek.setPosition(100, 100);
+		}
+		//this->krazek.setPosition(100, 100);
+		this->polowa = polowa;
+		printf("ustawiam bota: %s", this->polowa.c_str());
+		//std::count << "ustawiam bota na polowie : ";// << this->polowa;
+	}
+
+	
+
 	Bot::~Bot()
 	{
 	}

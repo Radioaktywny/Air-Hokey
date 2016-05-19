@@ -121,7 +121,7 @@ void Menu::Singleplayer()
 {	
 	Plansza plansza(sf::Vector2f(1500, 600), sf::Color(100, 200, 200));
 	Gracz gracz1;
-	Bot bot; // bedzie botem
+	Bot bot("prawo"); // bedzie botem
 	Krazek krazek;
 	sf::Time accumulator = sf::Time::Zero;
 	sf::Time ups = sf::seconds(1.f / 60.f);

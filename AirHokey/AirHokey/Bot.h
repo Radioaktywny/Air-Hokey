@@ -1,19 +1,24 @@
 
 #include<SFML/Graphics.hpp>
-#include <string.h>
-#include <string>
+#include "Plansza.h"
 class Bot
 {
 public:
-	Bot(std::string polowa);
+	Bot(std::string polowa , Plansza * plansza , Krazek * Pilka);
 	~Bot();
-	void move(sf::Vector2f dir);
+	void move();
 	void rysuj(sf::RenderWindow * window);
 	sf::Vector2f getKierunek();
 	sf::CircleShape getShape();
-
+	sf::CircleShape krazek;
 private:
 	std::string polowa;
-	sf::CircleShape krazek;
+	Krazek * pilka;
+	void move_right_side();
+	void move_left_side();
+	int linia_przy_bramce = 100;//powinienem ja wyznaczac !
+	//int wymiary[2];//wymiary planszy /0:szerokosc /1:wysokosc
+	//sf::CircleShape krazek;
+	Plansza *plansza;
 	sf::Vector2f kierunek;
 };

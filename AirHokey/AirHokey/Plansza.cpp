@@ -16,7 +16,7 @@ Plansza::Plansza(sf::Vector2f wymiary, sf::Color color)
 }
 void Plansza::initBoisko()
 {
-	int y = 150; // doda³em zmiane polozenia planszy zeby byly na gorze dodac score 
+	const int y = 150; // doda³em zmiane polozenia planszy zeby byly na gorze dodac score 
 	boisko.setFillColor(color);
 	boisko.setPosition(50, y);
 	boisko.setSize(wymiary);

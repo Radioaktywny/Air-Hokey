@@ -118,11 +118,13 @@ void Menu::menus()
 }
 
 void Menu::Singleplayer()
-{	
-	Plansza plansza(sf::Vector2f(1500, 600), sf::Color(100, 200, 200));
+{
+	int szerokosc = 1500;
+	int wysokosc = 600;
+	Plansza plansza(sf::Vector2f(szerokosc, wysokosc), sf::Color(100, 200, 200));
 	Gracz gracz1;
-	Bot bot("prawo"); // bedzie botem
 	Krazek krazek;
+	Bot bot("prawa", &plansza , &krazek); // bedzie botem
 	sf::Time accumulator = sf::Time::Zero;
 	sf::Time ups = sf::seconds(1.f / 60.f);
 	sf::Vector2f myszka(0, 0);
@@ -173,6 +175,7 @@ void Menu::Singleplayer()
 		}
 			window.clear();
 			krazek.move();
+			bot.move();
 			plansza.czyWplanszy(&krazek);
 			plansza.rysuj(&window);
 			krazek.rysuj(&window);

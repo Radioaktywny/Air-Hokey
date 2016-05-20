@@ -20,8 +20,9 @@
 		}
 		else if(polowa == "lewa")
 		{
-		//	this->krazek.setPosition((plansza->linieboczne[1].getPosition().x + this->linia_przy_bramce) / 2, plansza->linieboczne[1].getPosition().y / 2);
-			this->krazek.setPosition(500, 500);
+			linia_przy_bramce=linia_przy_bramce - 50;//przy 100 za duza przerwa :/
+			this->krazek.setPosition((plansza->linieboczne[1].getPosition().x + this->linia_przy_bramce) / 2, plansza->linieboczne[1].getPosition().y / 2);
+		//	this->krazek.setPosition(500, 500);
 		}
 		//this->krazek.setPosition(100, 100);
 		this->polowa = polowa;
@@ -72,8 +73,7 @@
 	{	
 
 		
-		float speed_do_lini=0.4f;
-		float speed_do_krazka = 0.4f;
+	
 		//std::cout << krazek.getPosition().x << " : " << plansza->linieboczne[3].getPosition().x<<std::endl;
 		
 		if (pilka->zwroc().getPosition().x > plansza->getSrodek().x)//jezeli pilka jest na polowie krazka
@@ -132,9 +132,7 @@
 	void Bot::move_left_side()
 	{
 
-		float speed_do_lini = 0.4f;
-		float speed_do_krazka = 0.0f;
-		std::cout << krazek.getPosition().x << " : " << plansza->linieboczne[2].getPosition().x<<std::endl;
+	//	std::cout << krazek.getPosition().x << " : " << plansza->linieboczne[2].getPosition().x<<std::endl;
 
 		if (pilka->zwroc().getPosition().x < plansza->getSrodek().x)//jezeli pilka jest na polowie krazka
 		{
@@ -167,11 +165,11 @@
 		{
 			if (krazek.getPosition().y > pilka->zwroc().getPosition().y)
 			{
-				krazek.move(-speed_do_lini, speed_do_lini);
+				krazek.move(-speed_do_lini, -speed_do_lini);
 			}
 			else if (krazek.getPosition().y < pilka->zwroc().getPosition().y)
 			{
-				krazek.move(-speed_do_lini, -speed_do_lini);
+				krazek.move(-speed_do_lini, speed_do_lini);
 			}
 
 		}
@@ -179,11 +177,11 @@
 		{
 			if (krazek.getPosition().y > pilka->zwroc().getPosition().y)
 			{
-				krazek.move(0, speed_do_lini);
+				krazek.move(0, -speed_do_lini);
 			}
 			else if (krazek.getPosition().y < pilka->zwroc().getPosition().y)
 			{
-				krazek.move(0, -speed_do_lini);
+				krazek.move(0, speed_do_lini);
 			}
 		}
 	}

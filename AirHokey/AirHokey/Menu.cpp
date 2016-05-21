@@ -159,23 +159,38 @@ void Menu::Singleplayer()
 				}
 				break;
 			case sf::Event::MouseMoved:
-				gracz1.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
+			//	gracz1.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
 				break;
 			}
 		}
 		if (Kolizje::sprawdzKolizje(&gracz1.getShape(), &krazek.zwroc()))
 		{
 			sf::Vector2f odbicie = Kolizje::wyznaczPredkosc(&gracz1.getShape(), &krazek.zwroc());
-			krazek.setPredkosc(sf::Vector2f(gracz1.getKierunek().x + (krazek.getPredkosc().x*odbicie.x) + krazek.getPredkosc().x, gracz1.getKierunek().y + (krazek.getPredkosc().y*odbicie.y) + krazek.getPredkosc().y));
+		//	krazek.setPredkosc(sf::Vector2f(gracz1.getKierunek().x + (krazek.getPredkosc().x*odbicie.x) + krazek.getPredkosc().x, gracz1.getKierunek().y + (krazek.getPredkosc().y*odbicie.y) + krazek.getPredkosc().y));
+			krazek.setPredkosc(odbicie);
+	//		krazek.setPredkosc(sf::Vector2f(gracz1.getKierunek().x, gracz1.getKierunek().y));
+		//	gracz1.move(sf::Vector2f(0.0000000000000000000000000001f, 0.0000000000000000000000001f));
+			
 		}
-		if (Kolizje::sprawdzKolizje(&bot.getShape(), &krazek.zwroc()))
+		
+		else if (Kolizje::sprawdzKolizje(&bot.getShape(), &krazek.zwroc()))
 		{
 			sf::Vector2f odbicie = Kolizje::wyznaczPredkosc(&bot.getShape(), &krazek.zwroc());
-			krazek.setPredkosc(sf::Vector2f(bot.getKierunek().x + (krazek.getPredkosc().x*odbicie.x) + krazek.getPredkosc().x, bot.getKierunek().y + (krazek.getPredkosc().y*odbicie.y) + krazek.getPredkosc().y));
+			krazek.setPredkosc(odbicie);
+			//	krazek.setPredkosc(sf::Vector2f(bot.getKierunek().x,bot.getKierunek().y));
+		//	bot.moveTo(0.4f,0.4f);
+			//	krazek.setPredkosc(sf::Vector2f(bot.getKierunek().x + (krazek.getPredkosc().x*odbicie.x) + krazek.getPredkosc().x, bot.getKierunek().y + (krazek.getPredkosc().y*odbicie.y) + krazek.getPredkosc().y));
+			
+		}
+		else
+		{
+			bot.move();
+			gracz1.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
+			
 		}
 			window.clear();
 			krazek.move();
-			bot.move();
+			
 			plansza.czyWplanszy(&krazek);
 			plansza.rysuj(&window);
 			krazek.rysuj(&window);

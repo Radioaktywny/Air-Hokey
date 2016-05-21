@@ -3,7 +3,7 @@
 class Kolizje
 {
 public:
-	static sf::Vector2f wyznaczPredkosc(sf::CircleShape *gracz,sf::CircleShape *krazek);
+	static sf::Vector2f wyznaczPredkosc(sf::CircleShape *gracz, sf::CircleShape *krazek);
 	static bool sprawdzKolizje(sf::CircleShape *gracz, sf::CircleShape *krazek);
 };
 

@@ -59,6 +59,11 @@
 		window->draw(this->krazek);
 	}
 
+	void Bot::moveTo(float x, float y)
+	{
+		krazek.move(x, y);
+	}
+
 	sf::Vector2f Bot::getKierunek()
 	{
 		return kierunek;
@@ -75,28 +80,28 @@
 		
 	
 		//std::cout << krazek.getPosition().x << " : " << plansza->linieboczne[3].getPosition().x<<std::endl;
-		
+		float problem_ze_stackiem = 0;//nie rozwiazuje :/
 		if (pilka->zwroc().getPosition().x > plansza->getSrodek().x)//jezeli pilka jest na polowie krazka
 		{
-			if (krazek.getPosition().x > pilka->zwroc().getPosition().x)
+			if (krazek.getPosition().x > pilka->zwroc().getPosition().x- problem_ze_stackiem)
 			{
-				if (krazek.getPosition().y > pilka->zwroc().getPosition().y)
+				if (krazek.getPosition().y > pilka->zwroc().getPosition().y + problem_ze_stackiem)
 				{
 					krazek.move(-speed_do_krazka, -speed_do_krazka);
 				}
-				else if (krazek.getPosition().y < pilka->zwroc().getPosition().y)
+				else if (krazek.getPosition().y < pilka->zwroc().getPosition().y - problem_ze_stackiem)
 				{
 					krazek.move(-speed_do_krazka, speed_do_krazka);
 				}
 			}
-			else if (krazek.getPosition().x < pilka->zwroc().getPosition().x)
+			else if (krazek.getPosition().x < pilka->zwroc().getPosition().x+ problem_ze_stackiem)
 			{
 
-				if (krazek.getPosition().y > pilka->zwroc().getPosition().y)
+				if (krazek.getPosition().y > pilka->zwroc().getPosition().y + problem_ze_stackiem)
 				{
 					krazek.move(speed_do_krazka, -speed_do_krazka);
 				}
-				else if (krazek.getPosition().y < pilka->zwroc().getPosition().y)
+				else if (krazek.getPosition().y < pilka->zwroc().getPosition().y - problem_ze_stackiem)
 				{
 					krazek.move(speed_do_krazka, speed_do_krazka);
 				}

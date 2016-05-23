@@ -21,7 +21,11 @@ void Krazek::init()
 	krazek.setPosition(this->start);
 	krazek.setRadius(30);
 	kierunek = sf::Vector2f(0, 0);
+<<<<<<< HEAD
 	maxpredkosc = 0.9f;
+=======
+	maxpredkosc = 10;
+>>>>>>> origin/Marcin
 }
 
 Krazek::~Krazek()
@@ -36,19 +40,28 @@ void Krazek::setPredkosc(sf::Vector2f kierunek)
 void Krazek::move()
 {	
 	//printf("%f x %f",kierunek.x,kierunek.y);
+<<<<<<< HEAD
 	
+=======
+>>>>>>> origin/Marcin
 	if (kierunek.x != 0 && kierunek.y != 0)
 	{
 		float predkosc = sqrtf(kierunek.x*kierunek.x + kierunek.y*kierunek.y);
 		if (predkosc > maxpredkosc)
 		{
+<<<<<<< HEAD
 			kierunek.x = kierunek.x*maxpredkosc/predkosc;
 			kierunek.y = kierunek.y*maxpredkosc/predkosc;
+=======
+			kierunek.x = kierunek.x*0.95f;
+			kierunek.y = kierunek.y*0.95f;
+>>>>>>> origin/Marcin
 		}
 			
 		
 	krazek.move(kierunek.x ,kierunek.y);
 	}
+<<<<<<< HEAD
 	else //lol i sie nie stackuje xd
 	{
 		kierunek.x = 0.1f;
@@ -57,6 +70,10 @@ void Krazek::move()
 }
 
 
+=======
+}
+
+>>>>>>> origin/Marcin
 void Krazek::rysuj(sf::RenderWindow * window)
 {
 	window->draw(krazek);

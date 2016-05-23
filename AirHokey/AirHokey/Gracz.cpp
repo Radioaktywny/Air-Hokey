@@ -16,10 +16,17 @@ void Gracz::move(sf::Vector2f dir)
 	this->kierunek = dir - krazek.getPosition();
 	this->kierunek=sf::Vector2f(kierunek.x-krazek.getRadius(),kierunek.y-krazek.getRadius());
 	float predkosc = sqrtf((kierunek.x*kierunek.x) +( kierunek.y*kierunek.y));
+<<<<<<< HEAD
 	if (predkosc > 30)
 	{
 		kierunek.x = 30*kierunek.x/predkosc;
 		kierunek.y = 30 *kierunek.y / predkosc;
+=======
+	if (predkosc > 20)
+	{
+		kierunek.x = 20*kierunek.x/predkosc;
+		kierunek.y = 20 *kierunek.y / predkosc;
+>>>>>>> origin/Marcin
 	}
 	krazek.move(kierunek.x , kierunek.y);
 }

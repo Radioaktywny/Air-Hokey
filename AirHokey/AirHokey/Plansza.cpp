@@ -16,9 +16,14 @@ Plansza::Plansza(sf::Vector2f wymiary, sf::Color color)
 }
 void Plansza::initBoisko()
 {
+<<<<<<< HEAD
 	const int y = 150; // doda³em zmiane polozenia planszy zeby byly na gorze dodac score 
 	boisko.setFillColor(color);
 	boisko.setPosition(50, y);
+=======
+	boisko.setFillColor(color);
+	boisko.setPosition(50, 50);
+>>>>>>> origin/Marcin
 	boisko.setSize(wymiary);
 	for (int i = 0; i < 4; ++i)
 	{
@@ -28,16 +33,28 @@ void Plansza::initBoisko()
 	linieboczne[1].setSize(sf::Vector2f(wymiary.x, 20));
 	linieboczne[2].setSize(sf::Vector2f(20, wymiary.y));
 	linieboczne[3].setSize(sf::Vector2f(20, wymiary.y));
+<<<<<<< HEAD
 	linieboczne[0].setPosition(sf::Vector2f(50, y));
 	linieboczne[1].setPosition(sf::Vector2f( 50, wymiary.y+(y-20)));
 	linieboczne[2].setPosition(sf::Vector2f(50, y));
 	linieboczne[3].setPosition(sf::Vector2f(wymiary.x+50, y));
+=======
+	linieboczne[0].setPosition(sf::Vector2f(50, 50));
+	linieboczne[1].setPosition(sf::Vector2f( 50, wymiary.y+30));
+	linieboczne[2].setPosition(sf::Vector2f(50, 50));
+	linieboczne[3].setPosition(sf::Vector2f(wymiary.x+50, 50));
+>>>>>>> origin/Marcin
 	bramki[0].setFillColor(sf::Color::Red);
 	bramki[1].setFillColor(sf::Color::Red);
 	bramki[0].setSize(sf::Vector2f(20, wymiary.y/3+30));
 	bramki[1].setSize(sf::Vector2f(20, wymiary.y/3+30));
+<<<<<<< HEAD
 	bramki[0].setPosition(50,wymiary.y/3+y);
 	bramki[1].setPosition(wymiary.x+50,wymiary.y/3+y);
+=======
+	bramki[0].setPosition(50,wymiary.y/3);
+	bramki[1].setPosition(wymiary.x+50,wymiary.y/3);
+>>>>>>> origin/Marcin
 
 }
 void Plansza::rysuj(sf::RenderWindow* window)

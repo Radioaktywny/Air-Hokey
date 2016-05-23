@@ -18,11 +18,13 @@ public:
 	void runMenu();
 
 protected:
-	enum MenuState { MENU, GAME_SINGLE, GAME_MULTI, GAME_OVER, END ,};
+	enum MenuState { MENU, MENU2, GAME_SINGLE, GAME_MULTI, SERVER, CLIENT, GAME_OVER, END };
 	MenuState state;
 
 private:
 	Font font;
 	void Singleplayer();
+	void Multiplayer();
 	void menus();
+	void menusMulti();
 };

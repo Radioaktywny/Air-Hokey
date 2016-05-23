@@ -7,14 +7,13 @@
 #include "Krazek.h"
 #include "Bot.h"
 #include "Menu.h"
-<<<<<<< HEAD
 #include "Kolizje.h"
 
 RenderWindow window(VideoMode(1600, 900), "Hockey", Style::Titlebar | Style::Close | Style::Resize);
 
-=======
+
 sf::RenderWindow window(sf::VideoMode(1600, 900), "Hockey", sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize);
->>>>>>> origin/Marcin
+
 Menu::Menu()
 {
 	state = END;
@@ -24,10 +23,8 @@ Menu::Menu()
 		return;
 	}
 	state = MENU;
-<<<<<<< HEAD
+
 	runMenu();
-=======
->>>>>>> origin/Marcin
 }
 
 
@@ -35,17 +32,11 @@ Menu::~Menu()
 {
 }
 
-<<<<<<< HEAD
-void Menu::runMenu()
-{
-	//dopoki nie ma statusu END	
-=======
 
 
 void Menu::runMenu()
 {
 	//dopuki nie ma statusu END	
->>>>>>> origin/Marcin
 	while (state != END)
 	{
 		switch (state)
@@ -53,21 +44,19 @@ void Menu::runMenu()
 		case MenuState::MENU:
 			menus();
 			break;
-<<<<<<< HEAD
 		case MenuState::MENU2:
 			menusMulti();
 			break;
 		case MenuState::GAME_MULTI:
 			Multiplayer();
 			break;
-=======
+
 		case MenuState::GAME_MULTI:
 			//odpala MULTI
 			cout<<"Odpalam Multiplayera"<<endl;
 			state = MENU; // narazie wraca do menu
 			break;
 		
->>>>>>> origin/Marcin
 		case MenuState::GAME_SINGLE:
 			//odpala SINGLA
 			Singleplayer();
@@ -78,7 +67,6 @@ void Menu::runMenu()
 	}
 }
 
-<<<<<<< HEAD
 void Menu::menusMulti()
 {
 	Text title("AIR_HOCKEY", font, 80);//tytu³
@@ -145,8 +133,6 @@ void Menu::menusMulti()
 	}
 
 }
-=======
->>>>>>> origin/Marcin
 
 void Menu::menus()
 {	
@@ -167,11 +153,10 @@ void Menu::menus()
 
 	while (state == MENU)
 	{
-<<<<<<< HEAD
+
 		Vector2f mouse(Mouse::getPosition(window));
-=======
 		sf::Vector2f mouse(Mouse::getPosition(window));
->>>>>>> origin/Marcin
+
 		Event event;
 
 		while (window.pollEvent(event))
@@ -191,11 +176,11 @@ void Menu::menus()
 			else if (tekst[1].getGlobalBounds().contains(mouse) &&
 				event.type == Event::MouseButtonReleased && event.key.code == Mouse::Left)
 			{
-<<<<<<< HEAD
+
 				state = MENU2;
-=======
+
 				state = GAME_MULTI;
->>>>>>> origin/Marcin
+
 			}//klikniêcie Exit
 			else if (tekst[2].getGlobalBounds().contains(mouse) &&
 				event.type == Event::MouseButtonReleased && event.key.code == Mouse::Left)
@@ -220,7 +205,6 @@ void Menu::menus()
 }
 
 void Menu::Singleplayer()
-<<<<<<< HEAD
 {
 	int szerokosc = 1500;
 	int wysokosc = 600;
@@ -228,19 +212,17 @@ void Menu::Singleplayer()
 	Gracz gracz1;
 	Krazek krazek;
 	Bot bot("prawa", &plansza, &krazek); // bedzie botem
-=======
 {	
 	Plansza plansza(sf::Vector2f(1500, 600), sf::Color(100, 200, 200));
 	Gracz gracz1;
 	Bot bot; // bedzie botem
 	Krazek krazek;
->>>>>>> origin/Marcin
 	sf::Time accumulator = sf::Time::Zero;
 	sf::Time ups = sf::seconds(1.f / 60.f);
 	sf::Vector2f myszka(0, 0);
 	sf::Clock clock;
 	window.setMouseCursorVisible(false);
-<<<<<<< HEAD
+
 
 	//Dopuki gra
 	while (state == GAME_SINGLE)
@@ -252,8 +234,6 @@ void Menu::Singleplayer()
 		while (window.pollEvent(eventSF))
 		{
 
-=======
-	
 	//Dopuki gra
 	while (state == GAME_SINGLE )
 	{	
@@ -267,8 +247,7 @@ void Menu::Singleplayer()
 		}
 		while (window.pollEvent(eventSF))
 		{
-			
->>>>>>> origin/Marcin
+
 			switch (eventSF.type)
 			{
 			case sf::Event::Closed:
@@ -282,7 +261,6 @@ void Menu::Singleplayer()
 					window.setMouseCursorVisible(true);
 				}
 				break;
-<<<<<<< HEAD
 			case sf::Event::MouseMoved:
 				//	gracz1.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
 				break;
@@ -315,7 +293,6 @@ void Menu::Singleplayer()
 			accumulator -= ups;
 
 			window.clear();
-=======
 			case sf::Event::MouseEntered:
 				std::cout << "Mouse within screen bounds" << std::endl;
 				break;
@@ -335,13 +312,11 @@ void Menu::Singleplayer()
 				krazek.setPredkosc(bot.getKierunek());
 			window.clear();
 			plansza.czyWplanszy(&krazek);
->>>>>>> origin/Marcin
 			plansza.rysuj(&window);
 			krazek.rysuj(&window);
 			bot.rysuj(&window);//bot bedzie
 			gracz1.rysuj(&window);
 			window.display();
-<<<<<<< HEAD
 		}
 		accumulator += clock.restart();
 	}
@@ -412,8 +387,6 @@ void Menu::Multiplayer()
 		gracz.rysuj(&window);
 		window.display();
 		accumulator += clock.restart();
-=======
-			accumulator += clock.restart();
->>>>>>> origin/Marcin
+
 	}
 }

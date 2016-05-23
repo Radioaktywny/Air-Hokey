@@ -5,6 +5,7 @@
 class Plansza
 {
 public:
+	sf::Vector2f bramka;
 	Plansza();
 	Plansza(sf::Vector2f wymiary,sf::Color color);
 	~Plansza();

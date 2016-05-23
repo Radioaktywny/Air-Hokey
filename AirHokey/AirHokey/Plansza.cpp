@@ -38,6 +38,7 @@ void Plansza::initBoisko()
 	bramki[1].setSize(sf::Vector2f(20, wymiary.y/3+30));
 	bramki[0].setPosition(50,wymiary.y/3+y);
 	bramki[1].setPosition(wymiary.x+50,wymiary.y/3+y);
+	bramka = sf::Vector2f(wymiary.x, wymiary.y / 2);
 
 }
 void Plansza::rysuj(sf::RenderWindow* window)

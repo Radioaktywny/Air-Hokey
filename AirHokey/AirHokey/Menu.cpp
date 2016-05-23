@@ -138,11 +138,7 @@ void Menu::Singleplayer()
 		sf::Event eventSF;
 		
 		//Check if there is an event
-		while (accumulator > ups)
-		{
-			accumulator -= ups;
-		}
-		while (window.pollEvent(eventSF))
+			while (window.pollEvent(eventSF))
 		{
 			
 			switch (eventSF.type)
@@ -163,40 +159,49 @@ void Menu::Singleplayer()
 				break;
 			}
 		}
-		if (Kolizje::sprawdzKolizje(&gracz1.getShape(), &krazek.zwroc()))
-		{
-			sf::Vector2f odbicie = Kolizje::wyznaczPredkosc(&gracz1.getShape(), &krazek.zwroc());
-		//	krazek.setPredkosc(sf::Vector2f(gracz1.getKierunek().x + (krazek.getPredkosc().x*odbicie.x) + krazek.getPredkosc().x, gracz1.getKierunek().y + (krazek.getPredkosc().y*odbicie.y) + krazek.getPredkosc().y));
-			krazek.setPredkosc(odbicie);
-	//		krazek.setPredkosc(sf::Vector2f(gracz1.getKierunek().x, gracz1.getKierunek().y));
-		//	gracz1.move(sf::Vector2f(0.0000000000000000000000000001f, 0.0000000000000000000000001f));
 			
-		}
-		
-		else if (Kolizje::sprawdzKolizje(&bot.getShape(), &krazek.zwroc()))
-		{
-			sf::Vector2f odbicie = Kolizje::wyznaczPredkosc(&bot.getShape(), &krazek.zwroc());
-			krazek.setPredkosc(odbicie);
-			//	krazek.setPredkosc(sf::Vector2f(bot.getKierunek().x,bot.getKierunek().y));
-		//	bot.moveTo(0.4f,0.4f);
-			//	krazek.setPredkosc(sf::Vector2f(bot.getKierunek().x + (krazek.getPredkosc().x*odbicie.x) + krazek.getPredkosc().x, bot.getKierunek().y + (krazek.getPredkosc().y*odbicie.y) + krazek.getPredkosc().y));
-			
-		}
-		else
-		{
-			bot.move();
-			gracz1.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
-			
-		}
+
+				if (Kolizje::sprawdzKolizje(&gracz1.getShape(), &krazek.zwroc()))
+				{
+					sf::Vector2f odbicie = Kolizje::wyznaczPredkosc(&gracz1.getShape(), &krazek.zwroc());
+					//	krazek.setPredkosc(sf::Vector2f(gracz1.getKierunek().x + (krazek.getPredkosc().x*odbicie.x) + krazek.getPredkosc().x, gracz1.getKierunek().y + (krazek.getPredkosc().y*odbicie.y) + krazek.getPredkosc().y));
+					krazek.setPredkosc(odbicie);
+					//		krazek.setPredkosc(sf::Vector2f(gracz1.getKierunek().x, gracz1.getKierunek().y));
+						//	gracz1.move(sf::Vector2f(0.0000000000000000000000000001f, 0.0000000000000000000000001f));
+
+				}
+
+				else if (Kolizje::sprawdzKolizje(&bot.getShape(), &krazek.zwroc()))
+				{
+					sf::Vector2f odbicie = Kolizje::wyznaczPredkosc(&bot.getShape(), &krazek.zwroc());
+					krazek.setPredkosc(odbicie);
+					bot.juzuderzylem();
+					//	krazek.setPredkosc(sf::Vector2f(bot.getKierunek().x,bot.getKierunek().y));
+				//	bot.moveTo(0.4f,0.4f);
+					//	krazek.setPredkosc(sf::Vector2f(bot.getKierunek().x + (krazek.getPredkosc().x*odbicie.x) + krazek.getPredkosc().x, bot.getKierunek().y + (krazek.getPredkosc().y*odbicie.y) + krazek.getPredkosc().y));
+
+				}
+				else
+				{
+					
+					
+
+				}
+				gracz1.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
+				bot.move();
+				krazek.move();
+				plansza.czyWplanszy(&krazek);
+				while (accumulator > ups)
+				{
+					accumulator -= ups;
+				
 			window.clear();
-			krazek.move();
-			
-			plansza.czyWplanszy(&krazek);
 			plansza.rysuj(&window);
 			krazek.rysuj(&window);
 			bot.rysuj(&window);//bot bedzie
 			gracz1.rysuj(&window);
 			window.display();
+				}
 			accumulator += clock.restart();
 	}
 }

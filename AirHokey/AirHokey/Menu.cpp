@@ -189,8 +189,15 @@ void Menu::Singleplayer()
 				}
 				gracz1.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
 				bot.move();
-				krazek.move();
-				plansza.czyWplanszy(&krazek);
+				
+				if (plansza.czyWplanszy(&krazek) == true)
+				{
+
+				}
+				else
+				{
+					krazek.move();
+				}
 				while (accumulator > ups)
 				{
 					accumulator -= ups;

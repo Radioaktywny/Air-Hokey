@@ -1,6 +1,6 @@
 #include "Kolizje.h"
 #include<SFML/Graphics.hpp>
-#include <iostream>
+
 
 sf::Vector2f Kolizje::wyznaczPredkosc(sf::CircleShape* gracz, sf::CircleShape* krazek)
 {

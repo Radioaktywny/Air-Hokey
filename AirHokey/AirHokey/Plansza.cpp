@@ -49,7 +49,7 @@ void Plansza::rysuj(sf::RenderWindow* window)
 	for (int i = 0; i < 2; ++i)
 		window->draw(bramki[i]);
 }
-bool Plansza::czyWplanszy(Krazek* object)
+short Plansza::czyWplanszy(Krazek* object)
 {
 	for (int i = 0; i < 4;++i)
 	{
@@ -59,22 +59,22 @@ bool Plansza::czyWplanszy(Krazek* object)
 			if (i == 0 &&object->getPredkosc().y<0)
 			{
 				object->setPredkosc(sf::Vector2f(object->getPredkosc().x, -1 * object->getPredkosc().y));
-				return true;
+				return 5;
 			}
 			if (i == 1 && object->getPredkosc().y>0)
 			{
 				object->setPredkosc(sf::Vector2f(object->getPredkosc().x, -1 * object->getPredkosc().y));
-				return true;
+				return 5;
 			}
 			if(i==2 && object->getPredkosc().x<0)
 			{
 				object->setPredkosc(sf::Vector2f(-1 * object->getPredkosc().x, object->getPredkosc().y));
-				return true;
+				return 5;
 			}
 			if (i == 3 && object->getPredkosc().x > 0)
 			{
 				object->setPredkosc(sf::Vector2f(-1 * object->getPredkosc().x, object->getPredkosc().y));
-				return true;
+				return 5;
 			}
 			
 		}
@@ -82,7 +82,8 @@ bool Plansza::czyWplanszy(Krazek* object)
 		{
 			if (bramki[i].getGlobalBounds().intersects(object->zwroc().getGlobalBounds()))
 			{
-				//object->gol(this->getSrodek());
+				object->gol(this->getSrodek());
+				return (i+1);
 			}
 		}
 	}

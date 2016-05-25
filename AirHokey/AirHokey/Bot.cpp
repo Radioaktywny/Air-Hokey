@@ -1,8 +1,6 @@
 #include "Bot.h"
-
 #include "Plansza.h"
 #include "SFML/Graphics.hpp"
-#include <iostream>
 
 
 	
@@ -84,7 +82,7 @@
 	{	
 		if (uderzylem)
 		{
-			if (static_cast<int>(krazek.getPosition().x) != plansza->linieboczne[3].getPosition().x - this->linia_przy_bramce) // jezeli pilka nie na polowce i krazek nie na lini startu
+			if (static_cast<int>(krazek.getPosition().x) <= plansza->linieboczne[3].getPosition().x - this->linia_przy_bramce) // jezeli pilka nie na polowce i krazek nie na lini startu
 			{
 				if (krazek.getPosition().y > pilka->zwroc().getPosition().y)
 				{
@@ -142,7 +140,7 @@
 
 			}
 		}
-		else if (static_cast<int>(krazek.getPosition().x) != plansza->linieboczne[3].getPosition().x - this->linia_przy_bramce) // jezeli pilka nie na polowce i krazek nie na lini startu
+		else if (static_cast<int>(krazek.getPosition().x) <= plansza->linieboczne[3].getPosition().x - this->linia_przy_bramce) // jezeli pilka nie na polowce i krazek nie na lini startu
 			{
 				if (krazek.getPosition().y > pilka->zwroc().getPosition().y)
 				{
@@ -202,7 +200,7 @@
 
 			}
 		}
-		else if (static_cast<int>(krazek.getPosition().x) != plansza->linieboczne[2].getPosition().x + this->linia_przy_bramce) // jezeli pilka nie na polowce i krazek nie na lini startu
+		else if (static_cast<int>(krazek.getPosition().x) >= plansza->linieboczne[2].getPosition().x + this->linia_przy_bramce) // jezeli pilka nie na polowce i krazek nie na lini startu
 		{
 			if (krazek.getPosition().y > pilka->zwroc().getPosition().y)
 			{

@@ -1,7 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include <Windows.h>
-#include<string>
-#include<iostream>
 #include "Plansza.h"
 #include "Gracz.h"
 #include "Krazek.h"

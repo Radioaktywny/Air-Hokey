@@ -8,6 +8,7 @@
 #include "Bot.h"
 #include "Menu.h"
 #include "Kolizje.h"
+#include "Score.h"
 sf::RenderWindow window(sf::VideoMode(1600, 900), "Hockey", sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize);
 Menu::Menu()
 {
@@ -119,6 +120,8 @@ void Menu::menus()
 
 void Menu::Singleplayer()
 {
+	
+	Score wynik(&font);
 	int szerokosc = 1500;
 	int wysokosc = 600;
 	Plansza plansza(sf::Vector2f(szerokosc, wysokosc), sf::Color(100, 200, 200));
@@ -131,9 +134,9 @@ void Menu::Singleplayer()
 	sf::Clock clock;
 	window.setMouseCursorVisible(false);
 	
-	//Dopuki gra
 	while (state == GAME_SINGLE )
 	{	
+		
 		//Define the event variable
 		sf::Event eventSF;
 		
@@ -175,7 +178,7 @@ void Menu::Singleplayer()
 				{
 					sf::Vector2f odbicie = Kolizje::wyznaczPredkosc(&bot.getShape(), &krazek.zwroc());
 					krazek.setPredkosc(odbicie);
-					bot.juzuderzylem();
+					bot.juzuderzylem(); // to powinno byc w bocie
 					//	krazek.setPredkosc(sf::Vector2f(bot.getKierunek().x,bot.getKierunek().y));
 				//	bot.moveTo(0.4f,0.4f);
 					//	krazek.setPredkosc(sf::Vector2f(bot.getKierunek().x + (krazek.getPredkosc().x*odbicie.x) + krazek.getPredkosc().x, bot.getKierunek().y + (krazek.getPredkosc().y*odbicie.y) + krazek.getPredkosc().y));
@@ -184,20 +187,31 @@ void Menu::Singleplayer()
 				else
 				{
 					
-					
+					//do wywalenia chyba ze zmieniamy opóŸnienie na myszce
 
 				}
 				gracz1.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
 				bot.move();
-				
-				if (plansza.czyWplanszy(&krazek) == true)
+				int sprawdz = plansza.czyWplanszy(&krazek); 
+				if (sprawdz == 5)//najechal na sciane boczna
 				{
-
+					//slabe obejscie problemu 
+				}
+				else if (sprawdz == 1) // trafil w bramke
+				{
+					//std::cout << "trafil1" << std::endl;
+					wynik.SetScore(0);
+				}
+				else if (sprawdz ==2) // trafil w bramke
+				{
+				//	std::cout << "trafil0" << std::endl;
+					wynik.SetScore(1);
 				}
 				else
 				{
 					krazek.move();
 				}
+
 				while (accumulator > ups)
 				{
 					accumulator -= ups;
@@ -207,6 +221,7 @@ void Menu::Singleplayer()
 			krazek.rysuj(&window);
 			bot.rysuj(&window);//bot bedzie
 			gracz1.rysuj(&window);
+			wynik.rysuj(&window);
 			window.display();
 				}
 			accumulator += clock.restart();

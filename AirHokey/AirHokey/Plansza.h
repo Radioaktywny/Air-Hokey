@@ -10,10 +10,10 @@ public:
 	Plansza(sf::Vector2f wymiary,sf::Color color);
 	~Plansza();
 	void rysuj(sf::RenderWindow* window);
-	bool czyWplanszy(Krazek* object);
+	short czyWplanszy(Krazek* object);
 	sf::Vector2f getSrodek();
 	sf::RectangleShape linieboczne[4];
-	private:
+private:
 	sf::Vector2f wymiary;
 	sf::CircleShape polowaKolo;
 	sf::RectangleShape liniaSrodkowa;	

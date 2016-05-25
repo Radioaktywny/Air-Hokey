@@ -18,21 +18,15 @@ public:
 	void runMenu();
 
 protected:
-<<<<<<< HEAD
-	enum MenuState { MENU, MENU2, GAME_SINGLE, GAME_MULTI, SERVER, CLIENT, GAME_OVER, END };
-=======
-	enum MenuState { MENU, GAME_SINGLE, GAME_MULTI, GAME_OVER, END ,};
->>>>>>> origin/Marcin
+	enum MenuState { MENU, MENU2, GAME_SINGLE, GAME_MULTI, GAME_OVER, END };
+	enum MultiType { SERVER, CLIENT};
 	MenuState state;
+	MultiType multiType;
 
 private:
 	Font font;
 	void Singleplayer();
-<<<<<<< HEAD
 	void Multiplayer();
 	void menus();
 	void menusMulti();
-=======
-	void menus();
->>>>>>> origin/Marcin
 };

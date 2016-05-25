@@ -11,9 +11,6 @@
 
 RenderWindow window(VideoMode(1600, 900), "Hockey", Style::Titlebar | Style::Close | Style::Resize);
 
-
-sf::RenderWindow window(sf::VideoMode(1600, 900), "Hockey", sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize);
-
 Menu::Menu()
 {
 	state = END;
@@ -23,20 +20,15 @@ Menu::Menu()
 		return;
 	}
 	state = MENU;
-
 	runMenu();
 }
-
 
 Menu::~Menu()
 {
 }
 
-
-
 void Menu::runMenu()
 {
-	//dopuki nie ma statusu END	
 	while (state != END)
 	{
 		switch (state)
@@ -50,13 +42,6 @@ void Menu::runMenu()
 		case MenuState::GAME_MULTI:
 			Multiplayer();
 			break;
-
-		case MenuState::GAME_MULTI:
-			//odpala MULTI
-			cout<<"Odpalam Multiplayera"<<endl;
-			state = MENU; // narazie wraca do menu
-			break;
-		
 		case MenuState::GAME_SINGLE:
 			//odpala SINGLA
 			Singleplayer();
@@ -99,12 +84,16 @@ void Menu::menusMulti()
 				event.type == Event::MouseButtonReleased && event.key.code == Mouse::Left)
 			{
 				state = GAME_MULTI;
+				multiType = SERVER;
+				std::cout << "heheheheh jestem w serwerze " + multiType;
+
 			}
 			//klikniêcie Klient
 			else if (tekst[1].getGlobalBounds().contains(mouse) &&
 				event.type == Event::MouseButtonReleased && event.key.code == Mouse::Left)
 			{
 				state = GAME_MULTI;
+				multiType = CLIENT;
 			}//klikniêcie Exit
 			else if (tekst[2].getGlobalBounds().contains(mouse) &&
 				event.type == Event::MouseButtonReleased && event.key.code == Mouse::Left)
@@ -153,10 +142,7 @@ void Menu::menus()
 
 	while (state == MENU)
 	{
-
 		Vector2f mouse(Mouse::getPosition(window));
-		sf::Vector2f mouse(Mouse::getPosition(window));
-
 		Event event;
 
 		while (window.pollEvent(event))
@@ -176,11 +162,7 @@ void Menu::menus()
 			else if (tekst[1].getGlobalBounds().contains(mouse) &&
 				event.type == Event::MouseButtonReleased && event.key.code == Mouse::Left)
 			{
-
 				state = MENU2;
-
-				state = GAME_MULTI;
-
 			}//klikniêcie Exit
 			else if (tekst[2].getGlobalBounds().contains(mouse) &&
 				event.type == Event::MouseButtonReleased && event.key.code == Mouse::Left)
@@ -212,17 +194,11 @@ void Menu::Singleplayer()
 	Gracz gracz1;
 	Krazek krazek;
 	Bot bot("prawa", &plansza, &krazek); // bedzie botem
-{	
-	Plansza plansza(sf::Vector2f(1500, 600), sf::Color(100, 200, 200));
-	Gracz gracz1;
-	Bot bot; // bedzie botem
-	Krazek krazek;
 	sf::Time accumulator = sf::Time::Zero;
 	sf::Time ups = sf::seconds(1.f / 60.f);
 	sf::Vector2f myszka(0, 0);
 	sf::Clock clock;
 	window.setMouseCursorVisible(false);
-
 
 	//Dopuki gra
 	while (state == GAME_SINGLE)
@@ -231,20 +207,6 @@ void Menu::Singleplayer()
 		sf::Event eventSF;
 
 		//Check if there is an event
-		while (window.pollEvent(eventSF))
-		{
-
-	//Dopuki gra
-	while (state == GAME_SINGLE )
-	{	
-		//Define the event variable
-		sf::Event eventSF;
-		
-		//Check if there is an event
-		while (accumulator > ups)
-		{
-			accumulator -= ups;
-		}
 		while (window.pollEvent(eventSF))
 		{
 
@@ -293,25 +255,6 @@ void Menu::Singleplayer()
 			accumulator -= ups;
 
 			window.clear();
-			case sf::Event::MouseEntered:
-				std::cout << "Mouse within screen bounds" << std::endl;
-				break;
-			case sf::Event::MouseLeft:
-				std::cout << "Mouse outisde the screen bounds" << std::endl;
-				break;
-			case sf::Event::MouseMoved:
-				gracz1.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
-				break;
-			}
-			
-
-		}
-			if (krazek.zwroc().intersects(gracz1.getShape()->getGlobalBounds()))
-				krazek.setPredkosc(gracz1.getKierunek());
-			if (krazek.zwroc().intersects(bot.getShape()->getGlobalBounds()))
-				krazek.setPredkosc(bot.getKierunek());
-			window.clear();
-			plansza.czyWplanszy(&krazek);
 			plansza.rysuj(&window);
 			krazek.rysuj(&window);
 			bot.rysuj(&window);//bot bedzie
@@ -327,7 +270,7 @@ void Menu::Multiplayer()
 	int szerokosc = 1500;
 	int wysokosc = 600;
 	Plansza plansza(Vector2f(szerokosc, wysokosc), Color(100, 200, 200));
-	Gracz gracz;
+	Gracz gracz(1), gracz2(2);
 	Krazek krazek;
 	Time accumulator = Time::Zero;
 	Time ups = seconds(1.f / 60.f);
@@ -337,56 +280,70 @@ void Menu::Multiplayer()
 
 	while (state == GAME_MULTI)
 	{
-		//Define the event variable
 		Event eventSF;
+		
+		while (window.pollEvent(eventSF))
+		{
+			switch (eventSF.type)
+			{
+				case Event::Closed:
+					state = MENU;
+					window.setMouseCursorVisible(true);
+					break;
+				case Event::KeyPressed:
+					if (eventSF.key.code == Keyboard::Escape)
+					{
+						state = MENU;
+						cout << "Zamykam gre" << endl;
+						window.setMouseCursorVisible(true);
+					}
+					break;
+				case Event::MouseMoved:
+					break;
+			}
+		}
 
-		//Check if there is an event
+		switch (multiType)
+		{
+			case MultiType::SERVER:
+				/*
+				TU GACU BARANIE JEDEN WSADZISZ SWOJE POSRANE UDP DLA SERVA
+				
+				*/
+				gracz.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
+
+				if (Kolizje::sprawdzKolizje(&gracz.getShape(), &krazek.zwroc()))
+				{
+					Vector2f odbicie = Kolizje::wyznaczPredkosc(&gracz.getShape(), &krazek.zwroc());
+					krazek.setPredkosc(odbicie);
+				}
+				break;
+			case MultiType::CLIENT:
+				/*
+				A TU DLA KLIENTA MA£PO JEDNA Z ZAKONU SPO£ECZNYCH DEGENERATOW
+				*/
+				gracz2.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y)); 
+
+				if (Kolizje::sprawdzKolizje(&gracz2.getShape(), &krazek.zwroc()))
+				{
+					Vector2f odbicie = Kolizje::wyznaczPredkosc(&gracz2.getShape(), &krazek.zwroc());
+					krazek.setPredkosc(odbicie);
+				}
+				break;
+		}
+
+		krazek.move();
+		plansza.czyWplanszy(&krazek);
 		while (accumulator > ups)
 		{
 			accumulator -= ups;
+			window.clear();
+			plansza.rysuj(&window);
+			krazek.rysuj(&window);
+			gracz.rysuj(&window);
+			gracz2.rysuj(&window);
+			window.display();
 		}
-		while (window.pollEvent(eventSF))
-		{
-
-			switch (eventSF.type)
-			{
-			case Event::Closed:
-				window.close();
-				state = MENU;
-				break;
-			case Event::KeyPressed:
-				if (eventSF.key.code == Keyboard::Escape)
-				{
-					state = MENU;
-					cout << "Zamykam gre" << endl;
-					window.setMouseCursorVisible(true);
-				}
-				break;
-			case sf::Event::MouseMoved:
-				break;
-			}
-		}
-		if (Kolizje::sprawdzKolizje(&gracz.getShape(), &krazek.zwroc()))
-		{
-			sf::Vector2f odbicie = Kolizje::wyznaczPredkosc(&gracz.getShape(), &krazek.zwroc());		
-			krazek.setPredkosc(odbicie);
-
-		}
-		else
-		{
-			gracz.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
-			
-
-		}
-		window.clear();
-		krazek.move();
-
-		plansza.czyWplanszy(&krazek);
-		plansza.rysuj(&window);
-		krazek.rysuj(&window);
-		gracz.rysuj(&window);
-		window.display();
 		accumulator += clock.restart();
-
 	}
 }

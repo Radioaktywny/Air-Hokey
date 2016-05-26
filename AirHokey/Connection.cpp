@@ -26,7 +26,7 @@ Connection::~Connection()
 
 }
 
-void Connection::isServer(CircleShape* gracz1, CircleShape* gracz2, CircleShape* krazek)
+void Connection::isServer(CircleShape * gracz1, CircleShape * gracz2, CircleShape * krazek, RenderWindow * window)
 {
 
 	IpAddress ipClient;
@@ -40,13 +40,14 @@ void Connection::isServer(CircleShape* gracz1, CircleShape* gracz2, CircleShape*
 	socket.bind(portServer);
 	Uint8 recived, sent;
 	sent = 2;
+
 	//Establishing connection
 
 	bool flag = true;
 	do
 	{
-		socket.receive(startPacket, ipClient, portClient);
-		//dodac przypsanie adresu clienta/auto bind?
+		socket.receive(startPacket, ipClient, portClient); //auto bind
+
 		if (startPacket >> recived && recived == 1)
 		{
 			flag = false;
@@ -71,8 +72,9 @@ void Connection::isServer(CircleShape* gracz1, CircleShape* gracz2, CircleShape*
 			//if (kPrevious != kPosition) krazek->move(kPosition);
 			if (g2Prev != g2Position) gracz2->move(g2Position); //????? sprawdzic to czy move czy set
 		}
-
-		g1Position = Vector2f(event.mouseMove.x, event.mouseMove.y);
+		window->pollEvent(event);
+		if (event.type == Event::MouseMoved)
+			g1Position = Vector2f(event.mouseMove.x, event.mouseMove.y);
 		if (g1Prev != g1Position) //ruch g1
 		{
 			packet << g1Position.x << g1Position.y << kPosition.x << kPosition.y;
@@ -81,7 +83,7 @@ void Connection::isServer(CircleShape* gracz1, CircleShape* gracz2, CircleShape*
 		}
 	}
 }
-void Connection::isClient(CircleShape* gracz1, CircleShape* gracz2, CircleShape* krazek)
+void Connection::isClient(CircleShape* gracz1, CircleShape* gracz2, CircleShape* krazek, RenderWindow * window)
 {
 
 	IpAddress ipServer;
@@ -122,8 +124,9 @@ void Connection::isClient(CircleShape* gracz1, CircleShape* gracz2, CircleShape*
 			//if (kPrevious != kPosition) krazek->move(kPosition);
 			if (g1Prev != g1Position) gracz1->move(g1Position); //????? sprawdzic to czy move czy set
 		}
-
-		g2Position = Vector2f(event.mouseMove.x, event.mouseMove.y);
+		window->pollEvent(event);
+		if (event.type == Event::MouseMoved)
+			g2Position = Vector2f(event.mouseMove.x, event.mouseMove.y);
 		if (g2Prev != g2Position) //ruch g1
 		{
 			packet << g2Position.x << g2Position.y << kPosition.x << kPosition.y;

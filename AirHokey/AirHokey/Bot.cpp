@@ -14,7 +14,7 @@
 		this->krazek.setRadius(40);
 		if (polowa == "prawa")
 		{
-			this->krazek.setPosition((plansza->linieboczne[3].getPosition().x - this->linia_przy_bramce) / 2, plansza->linieboczne[3].getPosition().y/2);
+			this->krazek.setPosition((plansza->linieboczne[0].getPosition().x - this->linia_przy_bramce) / 2, plansza->linieboczne[3].getPosition().y/2);
 		}
 		else if(polowa == "lewa")
 		{

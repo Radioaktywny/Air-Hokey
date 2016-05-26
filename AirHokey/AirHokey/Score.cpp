@@ -37,12 +37,12 @@ void Score::SetScore(int i)
 {	
 	if (i == 0)
 	{
-		lewa=lewa+1;
+		lewa++;
 		
 	}
 	else
 	{
-		prawa=prawa+1;
+		prawa++;
 	}
 	tekst[0].setString(std::to_string(lewa));
 	tekst[2].setString(std::to_string(prawa));

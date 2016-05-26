@@ -104,9 +104,9 @@ void Connection::isClient(CircleShape* gracz1, CircleShape* gracz2, CircleShape*
 		if (startPacket >> recived && recived == 2)
 		{
 			flag = false; //moze sie zmienic
-			//break;
-		}		
-	} while(flag);
+						  //break;
+		}
+	} while (flag);
 
 	Vector2f g1Position, g1Prev, g2Position, g2Prev, kPosition, kPrev;
 	while (true) // do testu

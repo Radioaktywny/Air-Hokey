@@ -1,8 +1,6 @@
 #include "Bot.h"
-
 #include "Plansza.h"
 #include "SFML/Graphics.hpp"
-#include <iostream>
 
 
 	
@@ -61,6 +59,7 @@
 
 	void Bot::moveTo(float x, float y)
 	{
+
 		krazek.move(x, y);
 	}
 
@@ -74,11 +73,44 @@
 		return this->krazek;
 	}
 
+	void Bot::juzuderzylem()
+	{
+		uderzylem = true;
+	}
+
 	void Bot::move_right_side()
 	{	
+		if (uderzylem)
+		{
+			if (static_cast<int>(krazek.getPosition().x) <= plansza->linieboczne[3].getPosition().x - this->linia_przy_bramce) // jezeli pilka nie na polowce i krazek nie na lini startu
+			{
+				if (krazek.getPosition().y > pilka->zwroc().getPosition().y)
+				{
+					krazek.move(speed_do_lini, -speed_do_lini);
+				}
+				else if (krazek.getPosition().y < pilka->zwroc().getPosition().y)
+				{
+					krazek.move(speed_do_lini, speed_do_lini);
+				}
 
-		
-	
+			}
+			else
+			{
+				if (krazek.getPosition().y > pilka->zwroc().getPosition().y)
+				{
+					krazek.move(0, -speed_do_lini);
+				}
+				else if (krazek.getPosition().y < pilka->zwroc().getPosition().y)
+				{
+					krazek.move(0, speed_do_lini);
+				}
+				uderzylem = false;
+			}
+
+		}
+		else
+		{
+				
 		//std::cout << krazek.getPosition().x << " : " << plansza->linieboczne[3].getPosition().x<<std::endl;
 		float problem_ze_stackiem = 0;//nie rozwiazuje :/
 		if (pilka->zwroc().getPosition().x > plansza->getSrodek().x)//jezeli pilka jest na polowie krazka
@@ -108,7 +140,7 @@
 
 			}
 		}
-		else if (static_cast<int>(krazek.getPosition().x) != plansza->linieboczne[3].getPosition().x - this->linia_przy_bramce) // jezeli pilka nie na polowce i krazek nie na lini startu
+		else if (static_cast<int>(krazek.getPosition().x) <= plansza->linieboczne[3].getPosition().x - this->linia_przy_bramce) // jezeli pilka nie na polowce i krazek nie na lini startu
 			{
 				if (krazek.getPosition().y > pilka->zwroc().getPosition().y)
 				{
@@ -131,6 +163,8 @@
 					krazek.move(0, speed_do_lini);
 				}
 			}
+
+		}
 		
 	}
 
@@ -166,7 +200,7 @@
 
 			}
 		}
-		else if (static_cast<int>(krazek.getPosition().x) != plansza->linieboczne[2].getPosition().x + this->linia_przy_bramce) // jezeli pilka nie na polowce i krazek nie na lini startu
+		else if (static_cast<int>(krazek.getPosition().x) >= plansza->linieboczne[2].getPosition().x + this->linia_przy_bramce) // jezeli pilka nie na polowce i krazek nie na lini startu
 		{
 			if (krazek.getPosition().y > pilka->zwroc().getPosition().y)
 			{

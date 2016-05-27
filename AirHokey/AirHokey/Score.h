@@ -10,6 +10,7 @@ public:
 	std::string czy_koniec();
 	void rysuj(sf::RenderWindow * window);
 	std::string kto_wygral();
+	void wyznaczWygranego(std::string * bot_strona, std::string *wygral);
 private:
 	int Score::prawa;
 	int czas_po_golu = 500;

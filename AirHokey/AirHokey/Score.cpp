@@ -74,6 +74,18 @@ std::string Score::kto_wygral()
 	return "prawa";
 }
 
+void Score::wyznaczWygranego(std::string * bot_strona, std::string * wygral)
+{
+	if (*bot_strona == kto_wygral())
+	{
+		*wygral = "WYGRALES :)";
+	}
+	else
+	{
+		*wygral = "PRZEGRALES :(";
+	}
+}
+
 void Score::laduj_goal()
 {
 

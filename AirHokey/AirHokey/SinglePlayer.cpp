@@ -13,10 +13,7 @@
 
 
 SinglePlayer::SinglePlayer()//RenderWindow * window , Font font)
-{
-	
-	//run(window,font);
-	
+{	
 }
 
 
@@ -43,15 +40,7 @@ string SinglePlayer::run(RenderWindow * window , Font *font , string *wygral)
 	{
 		if (wynik.czy_koniec() == "koniec")
 		{
-			
-			if (strona_bota == wynik.kto_wygral())
-			{
-				*wygral = "WYGRALES";
-			}
-			else
-			{
-				*wygral = "PRZEGRALES :(";
-			}
+			wynik.wyznaczWygranego(&strona_bota , wygral);
 			window->setMouseCursorVisible(true);
 			return "GAME_OVER";
 		}

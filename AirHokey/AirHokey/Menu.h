@@ -25,4 +25,5 @@ private:
 	void singleplayer();
 	void menuGlowne();
 	void menuKoniecGry();
+	void state_update(String bedzie);
 };

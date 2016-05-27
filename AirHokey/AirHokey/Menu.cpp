@@ -11,6 +11,7 @@
 #include "Score.h"
 #include "SinglePlayer.h"
 #include "GameOver.h"
+#include "MenuGlowne.h"
 sf::RenderWindow window(sf::VideoMode(1600, 900), "Hockey", sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize);
 Menu::Menu()
 {
@@ -27,8 +28,6 @@ Menu::Menu()
 Menu::~Menu()
 {
 }
-
-
 
 void Menu::runMenu()
 {
@@ -64,72 +63,29 @@ void Menu::runMenu()
 
 
 void Menu::menuGlowne()
-{	
-	
-	Text title("AIR_HOCKEY", font, 80);//tytu³
-	title.setStyle(Text::Bold);
-	title.setPosition(1600 / 2 - title.getGlobalBounds().width / 2, 20);
-	const int ile = 3;
-	Text tekst[ile]; // teksty przycisków
-	string str[] = { "SinglePlayer" , "MultiPlayer","Exit" };
-	for (int i = 0; i < ile; i++)
-	{
-		tekst[i].setFont(font);
-		tekst[i].setCharacterSize(65);
-		tekst[i].setString(str[i]);
-		tekst[i].setPosition(1600 / 2 - tekst[i].getGlobalBounds().width / 2, 250 + i * 120);
-	}
-
-	while (state == MENU)
-	{
-		sf::Vector2f mouse(Mouse::getPosition(window));
-		Event event;
-
-		while (window.pollEvent(event))
-		{
-			//Wciœniêcie ESC 
-			if (event.type == Event::Closed || event.type == Event::KeyPressed &&
-				event.key.code == Keyboard::Escape)
-				state = END;
-			//klikniêcie Singleplayer
-			else if (tekst[0].getGlobalBounds().contains(mouse) &&
-				event.type == Event::MouseButtonReleased && event.key.code == Mouse::Left)
-			{
-				//state = END;
-				state = GAME_SINGLE;
-			}
-			//klikniêcie Multiplayer
-			else if (tekst[1].getGlobalBounds().contains(mouse) &&
-				event.type == Event::MouseButtonReleased && event.key.code == Mouse::Left)
-			{
-				state = GAME_MULTI;
-			}//klikniêcie Exit
-			else if (tekst[2].getGlobalBounds().contains(mouse) &&
-				event.type == Event::MouseButtonReleased && event.key.code == Mouse::Left)
-			{
-				state = END;
-			}
-		}
-
-		//kolory jak najedziesz
-		for (int i = 0; i < ile; i++)
-			if (tekst[i].getGlobalBounds().contains(mouse))
-				tekst[i].setColor(Color::Red);
-			else tekst[i].setColor(Color::White);
-
-			window.clear();
-
-			window.draw(title);
-			for (int i = 0; i < ile; i++)
-				window.draw(tekst[i]);
-			window.display();
-	}
+{
+	MenuGlowne menus;
+	String bedzie = menus.run(&window, &font);
+	state_update(bedzie);
 }
 
 void Menu::menuKoniecGry()
 {
 	GameOver over;
 	String bedzie = over.run(&window, &font, &wygral);
+	state_update(bedzie);
+	
+}
+
+void Menu::singleplayer()
+{
+	SinglePlayer single;
+	String bedzie = single.run(&window, &font , &wygral);
+	state_update(bedzie);
+}
+
+void Menu::state_update(String bedzie)
+{
 	if (bedzie == "END")
 	{
 		state = END;
@@ -142,21 +98,14 @@ void Menu::menuKoniecGry()
 	{
 		state = GAME_SINGLE;
 	}
-}
-
-void Menu::singleplayer()
-{
-	SinglePlayer single;
-	String bedzie = single.run(&window, &font , &wygral);
-	if (bedzie == "GAME_OVER")
+	else if (bedzie == "GAME_MULTI")
+	{
+		state = GAME_SINGLE;
+	}
+	else if (bedzie == "GAME_OVER")
 	{
 		state = GAME_OVER;
 	}
-	else if (bedzie == "MENU")
-	{
-		state = MENU;
-	}
-
 }
 	
 

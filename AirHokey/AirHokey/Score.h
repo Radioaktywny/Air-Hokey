@@ -21,6 +21,6 @@ private:
 	sf::Sprite sprite_goal;
 	void laduj_goal();
 	sf::Texture image;
-	int koniec_gry = 2;
+	int koniec_gry = 5;
 };
 

@@ -21,6 +21,8 @@ protected:
 
 private:
 	Font font;
-	void Singleplayer();
-	void menus();
+	string wygral;
+	void singleplayer();
+	void menuGlowne();
+	void menuKoniecGry();
 };

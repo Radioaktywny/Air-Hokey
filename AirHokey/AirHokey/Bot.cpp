@@ -96,17 +96,17 @@
 			}
 			else
 			{
-				if (krazek.getPosition().y > pilka->zwroc().getPosition().y)
+				if (krazek.getPosition().y > plansza->getSrodek().y)
 				{
 					krazek.move(0, +speed_do_lini);
 				}
-				else if (krazek.getPosition().y < pilka->zwroc().getPosition().y)
+				else if (krazek.getPosition().y < plansza->getSrodek().y)
 				{
 					krazek.move(0, -speed_do_lini);
 				}
-				uderzylem = false;
+				
 			}
-
+			uderzylem = false;
 		}
 		else
 		{

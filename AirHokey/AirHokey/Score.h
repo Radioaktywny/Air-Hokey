@@ -3,7 +3,6 @@
 class Score
 {
 public:
-	Score();
 	Score(sf::Font * font);
 	~Score();
 	void SetScore(int i);

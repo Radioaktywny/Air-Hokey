@@ -12,7 +12,7 @@ public:
 	void rysuj(sf::RenderWindow* window);
 	short czyWplanszy(Krazek* object);
 	sf::Vector2f getSrodek();
-	sf::RectangleShape linieboczne[4];
+	sf::RectangleShape linieboczne[6];
 private:
 	sf::Vector2f wymiary;
 	sf::CircleShape polowaKolo;
@@ -20,6 +20,7 @@ private:
 	sf::Color color;
 	sf::RectangleShape boisko;
 	sf::RectangleShape bramki[2];
+	sf::CircleShape slupki[4];
 	void initBoisko();
 };
 

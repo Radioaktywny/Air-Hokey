@@ -24,6 +24,7 @@ SinglePlayer::~SinglePlayer()
 string SinglePlayer::run(RenderWindow * window , Font *font , string *wygral)
 {
 	window->setMouseCursorVisible(false);
+	window->setFramerateLimit(120);
 	Score wynik(font);
 	int szerokosc = 1500;
 	int wysokosc = 600;
@@ -32,10 +33,10 @@ string SinglePlayer::run(RenderWindow * window , Font *font , string *wygral)
 	Krazek krazek;
 	string strona_bota = "prawa";
 	Bot bot(strona_bota, &plansza, &krazek); // bedzie botem
-	sf::Time accumulator = sf::Time::Zero;
-	sf::Time ups = sf::seconds(1.f / 60.f);
-	sf::Vector2f myszka(0, 0);
-	sf::Clock clock;
+	//sf::Time accumulator = sf::Time::Zero;
+//	sf::Time ups = sf::seconds(1.f / 60.f);
+//	sf::Vector2f myszka(0, 0);
+//	sf::Clock clock;
 	while (true)
 	{
 		if (wynik.czy_koniec() == "koniec")
@@ -74,9 +75,9 @@ string SinglePlayer::run(RenderWindow * window , Font *font , string *wygral)
 
 		if (Kolizje::sprawdzKolizje(&gracz1.getShape(), &krazek.zwroc()))
 		{
-			sf::Vector2f odbicie = Kolizje::wyznaczPredkosc(&gracz1.getShape(), &krazek.zwroc());
+
 			//	krazek.setPredkosc(sf::Vector2f(gracz1.getKierunek().x + (krazek.getPredkosc().x*odbicie.x) + krazek.getPredkosc().x, gracz1.getKierunek().y + (krazek.getPredkosc().y*odbicie.y) + krazek.getPredkosc().y));
-			krazek.setPredkosc(odbicie);
+			krazek.setPredkosc(Kolizje::wyznaczPredkosc(&gracz1.getShape(), &krazek.zwroc()));
 			//		krazek.setPredkosc(sf::Vector2f(gracz1.getKierunek().x, gracz1.getKierunek().y));
 			//	gracz1.move(sf::Vector2f(0.0000000000000000000000000001f, 0.0000000000000000000000001f));
 
@@ -84,8 +85,7 @@ string SinglePlayer::run(RenderWindow * window , Font *font , string *wygral)
 
 		else if (Kolizje::sprawdzKolizje(&bot.getShape(), &krazek.zwroc()))
 		{
-			sf::Vector2f odbicie = Kolizje::wyznaczPredkosc(&bot.getShape(), &krazek.zwroc());
-			krazek.setPredkosc(odbicie);
+			krazek.setPredkosc(Kolizje::wyznaczPredkosc(&bot.getShape(), &krazek.zwroc()));
 			bot.juzuderzylem(); // to powinno byc w bocie
 								//	krazek.setPredkosc(sf::Vector2f(bot.getKierunek().x,bot.getKierunek().y));
 								//	bot.moveTo(0.4f,0.4f);
@@ -120,9 +120,9 @@ string SinglePlayer::run(RenderWindow * window , Font *font , string *wygral)
 			krazek.move();
 		}
 
-		while (accumulator > ups)
-		{
-			accumulator -= ups;
+//		while (accumulator > ups)
+//		{
+//			accumulator -= ups;
 
 			window->clear();
 			plansza.rysuj(window);
@@ -131,8 +131,8 @@ string SinglePlayer::run(RenderWindow * window , Font *font , string *wygral)
 			gracz1.rysuj(window);
 			wynik.rysuj(window);
 			window->display();
-		}
-		accumulator += clock.restart();
+	//	}
+	//	accumulator += clock.restart();
 	}
 	return "";
 }

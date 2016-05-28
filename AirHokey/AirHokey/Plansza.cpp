@@ -43,9 +43,9 @@ void Plansza::initBoisko()
 		slupki[i].setRadius(15);
 	}
 	slupki[0].setPosition(50, y+ (wymiary.y / 3) - 29);
-	slupki[1].setPosition(50, y +1+ (wymiary.y / 3)*2);
+	slupki[1].setPosition(50, y -1+ (wymiary.y / 3)*2);
 	slupki[2].setPosition(wymiary.x + 20, y + (wymiary.y / 3) - 29);
-	slupki[3].setPosition(wymiary.x + 20, y+1 + (wymiary.y / 3*2) );
+	slupki[3].setPosition(wymiary.x + 20, y-1 + (wymiary.y / 3*2) );
 	//bramki[0].setFillColor(sf::Color::Red);
 	//bramki[1].setFillColor(sf::Color::Red);
 	bramki[0].setSize(sf::Vector2f(20, wymiary.y/3));

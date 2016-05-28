@@ -19,8 +19,8 @@ private:
 	Krazek * pilka;
 	void move_right_side();
 	void move_left_side();
-	float speed_do_lini = 4;
-	float speed_do_krazka = 4;// 0.2f;<-poziom low xd / 0.4f <-poziom kozak xd
+	float speed_do_lini = 2.5f;
+	float speed_do_krazka = 2.5f;// 0.2f;<-poziom low xd / 0.4f <-poziom kozak xd
 	int linia_przy_bramce = 100;//powinienem ja wyznaczac !
 	//int wymiary[2];//wymiary planszy /0:szerokosc /1:wysokosc
 	//sf::CircleShape krazek;

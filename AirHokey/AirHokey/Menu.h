@@ -1,11 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <Windows.h>
-#include<string>
-#include<iostream>
 #include "Plansza.h"
 #include "Gracz.h"
 #include "Krazek.h"
-#include "Connection.h"
 
 using namespace std;
 using namespace sf;
@@ -19,16 +16,17 @@ public:
 	void runMenu();
 
 protected:
-	enum MenuState { MENU, MENU2, GAME_SINGLE, GAME_MULTI, GAME_OVER, END };
-	enum MultiType { SERVER, CLIENT};
+	enum MenuState { MENU, GAME_SINGLE, GAME_MULTI, GAME_OVER, END , CONN_MULTI, SERVER, CLIENT, };
 	MenuState state;
-	MultiType multiType;
-	Connection connect;
 
 private:
 	Font font;
-	void Singleplayer();
-	void Multiplayer();
-	void menus();
-	void menusMulti();
+	string wygral;
+	void singleplayer();
+	void menuGlowne();
+	void menuKoniecGry();
+	void menuPolaczenieMulti();
+	void state_update(String bedzie);
+	void multiplayerServer();
+	void multiplayerClient();
 };

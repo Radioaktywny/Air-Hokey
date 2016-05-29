@@ -16,14 +16,9 @@ Plansza::Plansza(sf::Vector2f wymiary, sf::Color color)
 }
 void Plansza::initBoisko()
 {
-<<<<<<< HEAD
 	const int y = 150; // doda³em zmiane polozenia planszy zeby byly na gorze dodac score 
 	boisko.setFillColor(color);
 	boisko.setPosition(50, y);
-=======
-	boisko.setFillColor(color);
-	boisko.setPosition(50, 50);
->>>>>>> origin/Marcin
 	boisko.setSize(wymiary);
 	for (int i = 0; i < 4; ++i)
 	{
@@ -33,28 +28,20 @@ void Plansza::initBoisko()
 	linieboczne[1].setSize(sf::Vector2f(wymiary.x, 20));
 	linieboczne[2].setSize(sf::Vector2f(20, wymiary.y));
 	linieboczne[3].setSize(sf::Vector2f(20, wymiary.y));
-<<<<<<< HEAD
+
 	linieboczne[0].setPosition(sf::Vector2f(50, y));
 	linieboczne[1].setPosition(sf::Vector2f( 50, wymiary.y+(y-20)));
 	linieboczne[2].setPosition(sf::Vector2f(50, y));
 	linieboczne[3].setPosition(sf::Vector2f(wymiary.x+50, y));
-=======
-	linieboczne[0].setPosition(sf::Vector2f(50, 50));
-	linieboczne[1].setPosition(sf::Vector2f( 50, wymiary.y+30));
-	linieboczne[2].setPosition(sf::Vector2f(50, 50));
-	linieboczne[3].setPosition(sf::Vector2f(wymiary.x+50, 50));
->>>>>>> origin/Marcin
+
 	bramki[0].setFillColor(sf::Color::Red);
 	bramki[1].setFillColor(sf::Color::Red);
 	bramki[0].setSize(sf::Vector2f(20, wymiary.y/3+30));
 	bramki[1].setSize(sf::Vector2f(20, wymiary.y/3+30));
-<<<<<<< HEAD
+
 	bramki[0].setPosition(50,wymiary.y/3+y);
 	bramki[1].setPosition(wymiary.x+50,wymiary.y/3+y);
-=======
-	bramki[0].setPosition(50,wymiary.y/3);
-	bramki[1].setPosition(wymiary.x+50,wymiary.y/3);
->>>>>>> origin/Marcin
+	bramka = sf::Vector2f(wymiary.x, wymiary.y / 2);
 
 }
 void Plansza::rysuj(sf::RenderWindow* window)
@@ -65,7 +52,8 @@ void Plansza::rysuj(sf::RenderWindow* window)
 	for (int i = 0; i < 2; ++i)
 		window->draw(bramki[i]);
 }
-void Plansza::czyWplanszy(Krazek* object)
+
+short Plansza::czyWplanszy(Krazek* object)
 {
 	for (int i = 0; i < 4;++i)
 	{
@@ -75,28 +63,35 @@ void Plansza::czyWplanszy(Krazek* object)
 			if (i == 0 &&object->getPredkosc().y<0)
 			{
 				object->setPredkosc(sf::Vector2f(object->getPredkosc().x, -1 * object->getPredkosc().y));
+				return 5;
 			}
 			if (i == 1 && object->getPredkosc().y>0)
 			{
 				object->setPredkosc(sf::Vector2f(object->getPredkosc().x, -1 * object->getPredkosc().y));
+				return 5;
 			}
 			if(i==2 && object->getPredkosc().x<0)
 			{
 				object->setPredkosc(sf::Vector2f(-1 * object->getPredkosc().x, object->getPredkosc().y));
+				return 5;
 			}
 			if (i == 3 && object->getPredkosc().x > 0)
 			{
 				object->setPredkosc(sf::Vector2f(-1 * object->getPredkosc().x, object->getPredkosc().y));
+				return 5;
 			}
+			
 		}
 		if (i < 2)
 		{
 			if (bramki[i].getGlobalBounds().intersects(object->zwroc().getGlobalBounds()))
 			{
-				//object->gol(this->getSrodek());
+				object->gol(this->getSrodek());
+				return (i+1);
 			}
 		}
 	}
+	return false;
 }
 sf::Vector2f Plansza::getSrodek()
 {

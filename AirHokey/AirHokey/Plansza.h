@@ -5,26 +5,20 @@
 class Plansza
 {
 public:
+	sf::Vector2f bramka;
 	Plansza();
 	Plansza(sf::Vector2f wymiary,sf::Color color);
 	~Plansza();
 	void rysuj(sf::RenderWindow* window);
-	void czyWplanszy(Krazek* object);
+	short czyWplanszy(Krazek* object);
 	sf::Vector2f getSrodek();
-<<<<<<< HEAD
 	sf::RectangleShape linieboczne[4];
-=======
->>>>>>> origin/Marcin
-	private:
+private:
 	sf::Vector2f wymiary;
 	sf::CircleShape polowaKolo;
 	sf::RectangleShape liniaSrodkowa;	
 	sf::Color color;
 	sf::RectangleShape boisko;
-<<<<<<< HEAD
-=======
-	sf::RectangleShape linieboczne[4];
->>>>>>> origin/Marcin
 	sf::RectangleShape bramki[2];
 	void initBoisko();
 };

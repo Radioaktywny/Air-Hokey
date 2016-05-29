@@ -130,7 +130,7 @@ void Connection::isClient(CircleShape* gracz1, CircleShape* gracz2, CircleShape*
 		if (g2Prev != g2Position) //ruch g1
 		{
 			packet << g2Position.x << g2Position.y << kPosition.x << kPosition.y;
-			gracz1->move(g2Position);
+			gracz2->move(g2Position);
 			socket.send(packet, ipServer, portServer);
 		}
 	}

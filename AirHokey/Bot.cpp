@@ -98,11 +98,11 @@
 			{
 				if (krazek.getPosition().y > pilka->zwroc().getPosition().y)
 				{
-					krazek.move(0, -speed_do_lini);
+					krazek.move(0, +speed_do_lini);
 				}
 				else if (krazek.getPosition().y < pilka->zwroc().getPosition().y)
 				{
-					krazek.move(0, speed_do_lini);
+					krazek.move(0, -speed_do_lini);
 				}
 				uderzylem = false;
 			}
@@ -112,7 +112,7 @@
 		{
 				
 		//std::cout << krazek.getPosition().x << " : " << plansza->linieboczne[3].getPosition().x<<std::endl;
-		float problem_ze_stackiem = 0;//nie rozwiazuje :/
+		float problem_ze_stackiem = 40;//nie rozwiazuje :/
 		if (pilka->zwroc().getPosition().x > plansza->getSrodek().x)//jezeli pilka jest na polowie krazka
 		{
 			if (krazek.getPosition().x > pilka->zwroc().getPosition().x- problem_ze_stackiem)

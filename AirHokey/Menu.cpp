@@ -9,13 +9,20 @@
 #include "Menu.h"
 #include "Kolizje.h"
 #include "Score.h"
+#include "SinglePlayer.h"
+#include "GameOver.h"
+#include "MenuGlowne.h"
 sf::RenderWindow window(sf::VideoMode(1600, 900), "Hockey", sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize);
 Menu::Menu()
 {
 	state = END;
 	if (!font.loadFromFile("data/Mecha.ttf"))
 	{
+<<<<<<< ba169a1b4d6c2fa5933fce903996991e84b2add7
 		MessageBox(NULL, "Font not found!", "ERROR", NULL);
+=======
+		MessageBoxA(NULL, "Font not found!", "ERROR", NULL);
+>>>>>>> nowa konfiguracja bo mi nic nie dzialalo
 		return;
 	}
 	state = MENU;
@@ -26,8 +33,6 @@ Menu::~Menu()
 {
 }
 
-
-
 void Menu::runMenu()
 {
 	//dopuki nie ma statusu END	
@@ -36,194 +41,75 @@ void Menu::runMenu()
 		switch (state)
 		{
 		case MenuState::MENU:
-			menus();
+			menuGlowne();
 			break;
 		case MenuState::GAME_MULTI:
 			//odpala MULTI
 			cout<<"Odpalam Multiplayera"<<endl;
 			state = MENU; // narazie wraca do menu
+			menuKoniecGry();
 			break;
 		
 		case MenuState::GAME_SINGLE:
 			//odpala SINGLA
-			Singleplayer();
+			singleplayer();
 			cout << "Odpalam Singleplayera" << endl;
-			menus();
+			break;
+		
+		case MenuState::GAME_OVER:
+			//odpala Koniec Gry
+			cout << "Odpalam Gameover" << endl;
+			menuKoniecGry();
 			break;
 		}
 	}
 }
 
 
-void Menu::menus()
-{	
-	
-	Text title("AIR_HOCKEY", font, 80);//tytu³
-	title.setStyle(Text::Bold);
-	title.setPosition(1600 / 2 - title.getGlobalBounds().width / 2, 20);
-	const int ile = 3;
-	Text tekst[ile]; // teksty przycisków
-	string str[] = { "SinglePlayer" , "MultiPlayer","Exit" };
-	for (int i = 0; i < ile; i++)
-	{
-		tekst[i].setFont(font);
-		tekst[i].setCharacterSize(65);
-		tekst[i].setString(str[i]);
-		tekst[i].setPosition(1600 / 2 - tekst[i].getGlobalBounds().width / 2, 250 + i * 120);
-	}
-
-	while (state == MENU)
-	{
-		sf::Vector2f mouse(Mouse::getPosition(window));
-		Event event;
-
-		while (window.pollEvent(event))
-		{
-			//Wciœniêcie ESC 
-			if (event.type == Event::Closed || event.type == Event::KeyPressed &&
-				event.key.code == Keyboard::Escape)
-				state = END;
-			//klikniêcie Singleplayer
-			else if (tekst[0].getGlobalBounds().contains(mouse) &&
-				event.type == Event::MouseButtonReleased && event.key.code == Mouse::Left)
-			{
-				//state = END;
-				state = GAME_SINGLE;
-			}
-			//klikniêcie Multiplayer
-			else if (tekst[1].getGlobalBounds().contains(mouse) &&
-				event.type == Event::MouseButtonReleased && event.key.code == Mouse::Left)
-			{
-				state = GAME_MULTI;
-			}//klikniêcie Exit
-			else if (tekst[2].getGlobalBounds().contains(mouse) &&
-				event.type == Event::MouseButtonReleased && event.key.code == Mouse::Left)
-			{
-				state = END;
-			}
-		}
-
-		//kolory jak najedziesz
-		for (int i = 0; i < ile; i++)
-			if (tekst[i].getGlobalBounds().contains(mouse))
-				tekst[i].setColor(Color::Red);
-			else tekst[i].setColor(Color::White);
-
-			window.clear();
-
-			window.draw(title);
-			for (int i = 0; i < ile; i++)
-				window.draw(tekst[i]);
-			window.display();
-	}
-}
-
-void Menu::Singleplayer()
+void Menu::menuGlowne()
 {
+	MenuGlowne menus;
+	String bedzie = menus.run(&window, &font);
+	state_update(bedzie);
+}
+
+void Menu::menuKoniecGry()
+{
+	GameOver over;
+	String bedzie = over.run(&window, &font, &wygral);
+	state_update(bedzie);
 	
-	Score wynik(&font);
-	int szerokosc = 1500;
-	int wysokosc = 600;
-	Plansza plansza(sf::Vector2f(szerokosc, wysokosc), sf::Color(100, 200, 200));
-	Gracz gracz1;
-	Krazek krazek;
-	Bot bot("prawa", &plansza , &krazek); // bedzie botem
-	sf::Time accumulator = sf::Time::Zero;
-	sf::Time ups = sf::seconds(1.f / 60.f);
-	sf::Vector2f myszka(0, 0);
-	sf::Clock clock;
-	window.setMouseCursorVisible(false);
-	
-	while (state == GAME_SINGLE )
-	{	
-		
-		//Define the event variable
-		sf::Event eventSF;
-		
-		//Check if there is an event
-			while (window.pollEvent(eventSF))
-		{
-			
-			switch (eventSF.type)
-			{
-			case sf::Event::Closed:
-				window.close();
-				break;
-			case sf::Event::KeyPressed:
-				if (eventSF.key.code == Keyboard::Escape)
-				{
-					state = MENU;
-					cout << "Zamykam gre" << endl;
-					window.setMouseCursorVisible(true);
-				}
-				break;
-			case sf::Event::MouseMoved:
-			//	gracz1.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
-				break;
-			}
-		}
-			
+}
 
-				if (Kolizje::sprawdzKolizje(&gracz1.getShape(), &krazek.zwroc()))
-				{
-					sf::Vector2f odbicie = Kolizje::wyznaczPredkosc(&gracz1.getShape(), &krazek.zwroc());
-					//	krazek.setPredkosc(sf::Vector2f(gracz1.getKierunek().x + (krazek.getPredkosc().x*odbicie.x) + krazek.getPredkosc().x, gracz1.getKierunek().y + (krazek.getPredkosc().y*odbicie.y) + krazek.getPredkosc().y));
-					krazek.setPredkosc(odbicie);
-					//		krazek.setPredkosc(sf::Vector2f(gracz1.getKierunek().x, gracz1.getKierunek().y));
-						//	gracz1.move(sf::Vector2f(0.0000000000000000000000000001f, 0.0000000000000000000000001f));
+void Menu::singleplayer()
+{
+	SinglePlayer single;
+	String bedzie = single.run(&window, &font , &wygral);
+	state_update(bedzie);
+}
 
-				}
-
-				else if (Kolizje::sprawdzKolizje(&bot.getShape(), &krazek.zwroc()))
-				{
-					sf::Vector2f odbicie = Kolizje::wyznaczPredkosc(&bot.getShape(), &krazek.zwroc());
-					krazek.setPredkosc(odbicie);
-					bot.juzuderzylem(); // to powinno byc w bocie
-					//	krazek.setPredkosc(sf::Vector2f(bot.getKierunek().x,bot.getKierunek().y));
-				//	bot.moveTo(0.4f,0.4f);
-					//	krazek.setPredkosc(sf::Vector2f(bot.getKierunek().x + (krazek.getPredkosc().x*odbicie.x) + krazek.getPredkosc().x, bot.getKierunek().y + (krazek.getPredkosc().y*odbicie.y) + krazek.getPredkosc().y));
-
-				}
-				else
-				{
-					
-					//do wywalenia chyba ze zmieniamy opóŸnienie na myszce
-
-				}
-				gracz1.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
-				bot.move();
-				int sprawdz = plansza.czyWplanszy(&krazek); 
-				if (sprawdz == 5)//najechal na sciane boczna
-				{
-					//slabe obejscie problemu 
-				}
-				else if (sprawdz == 1) // trafil w bramke
-				{
-					//std::cout << "trafil1" << std::endl;
-					wynik.SetScore(0);
-				}
-				else if (sprawdz ==2) // trafil w bramke
-				{
-				//	std::cout << "trafil0" << std::endl;
-					wynik.SetScore(1);
-				}
-				else
-				{
-					krazek.move();
-				}
-
-				while (accumulator > ups)
-				{
-					accumulator -= ups;
-				
-			window.clear();
-			plansza.rysuj(&window);
-			krazek.rysuj(&window);
-			bot.rysuj(&window);//bot bedzie
-			gracz1.rysuj(&window);
-			wynik.rysuj(&window);
-			window.display();
-				}
-			accumulator += clock.restart();
+void Menu::state_update(String bedzie)
+{
+	if (bedzie == "END")
+	{
+		state = END;
+	}
+	else if (bedzie == "MENU")
+	{
+		state = MENU;
+	}
+	else if (bedzie == "GAME_SINGLE")
+	{
+		state = GAME_SINGLE;
+	}
+	else if (bedzie == "GAME_MULTI")
+	{
+		state = GAME_SINGLE;
+	}
+	else if (bedzie == "GAME_OVER")
+	{
+		state = GAME_OVER;
 	}
 }
+	
+

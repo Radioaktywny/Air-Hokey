@@ -18,11 +18,7 @@ Menu::Menu()
 	state = END;
 	if (!font.loadFromFile("data/Mecha.ttf"))
 	{
-<<<<<<< ba169a1b4d6c2fa5933fce903996991e84b2add7
-		MessageBox(NULL, "Font not found!", "ERROR", NULL);
-=======
 		MessageBoxA(NULL, "Font not found!", "ERROR", NULL);
->>>>>>> nowa konfiguracja bo mi nic nie dzialalo
 		return;
 	}
 	state = MENU;

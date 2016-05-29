@@ -1,5 +1,6 @@
 #pragma once
 #include<SFML/Graphics.hpp>
+
 class Gracz
 {
 public:
@@ -13,5 +14,6 @@ public:
 private:
 	sf::CircleShape krazek;
 	sf::Vector2f kierunek;
+
 };
 

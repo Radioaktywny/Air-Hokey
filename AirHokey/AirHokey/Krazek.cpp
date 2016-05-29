@@ -36,7 +36,6 @@ void Krazek::setPredkosc(sf::Vector2f kierunek)
 void Krazek::move()
 {	
 	//printf("%f x %f",kierunek.x,kierunek.y);
-	
 	if (kierunek.x != 0 && kierunek.y != 0)
 	{
 		float predkosc = sqrtf(kierunek.x*kierunek.x + kierunek.y*kierunek.y);

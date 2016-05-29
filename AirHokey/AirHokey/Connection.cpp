@@ -26,100 +26,115 @@ Connection::~Connection()
 
 }
 
-void Connection::isServer()
+void Connection::isServer(CircleShape * gracz1, CircleShape * gracz2, CircleShape * krazek, RenderWindow * window)
 {
-	
-		IpAddress ip = IpAddress::getLocalAddress();	// 192.168.0.103
-		UdpSocket socket;
-		char buffer[200];
-		size_t received;
-		string text = "Connected to:";
-		unsigned short port;
-		map<unsigned short, IpAddress> computerID;
 
-		cout << "Set port number: ";
-		cin >> port;
-
-		socket.bind(port);
-
-			IpAddress rIp;
-			unsigned short port;
-			socket.receive(buffer, sizeof(buffer), received, rIp, port);
-			cout << 1;
-			if (received > 0)
-			{
-				cout << 2;
-				computerID[port] = rIp;
-				cout << computerID[port];
-			}
-			cout << 3;
-
-		bool done = false;
-
-		while(!done)
-		{
-
-				cout << 4;
-				getline(cin, text);
-				map<unsigned short, IpAddress>::iterator tempIterator;
-
-				for (tempIterator = computerID.begin(); tempIterator != computerID.end(); tempIterator++)
-				{
-					socket.send(text.c_str(), text.length() + 1, tempIterator->second, tempIterator->first);
-				}
-		}
-}
-void Connection::isClient()
-{
-	IpAddress ip = IpAddress::getLocalAddress();	// 192.168.0.103
+	IpAddress ipClient;
 	UdpSocket socket;
-	char buffer[200];
-	size_t received;
-	int count_connections = 0;
 	string text = "Connected to:";
-	cout << 1;
-	string sIp;
-	cout << "Enter server ip:";
-	char c;
+	unsigned short portServer = 54321;
+	unsigned short portClient = 54322;
+	Packet packet, startPacket;
+	Event event;
 
-	while (true)
+	socket.bind(portServer);
+	Uint8 recived, sent;
+	sent = 2;
+
+	//Establishing connection
+
+	bool flag = true;
+	do
 	{
+		socket.receive(startPacket, ipClient, portClient); //auto bind
 
-		c = (char)getch();
-		if (c == 13)
+		if (startPacket >> recived && recived == 1)
 		{
-			break;
+			flag = false;
+			startPacket << sent;
+			socket.send(startPacket, ipClient, portClient);
 		}
-		sIp += c;
-		cout << "*";
+	} while (flag);
 
-	}
-	cout << 2;
-	IpAddress sendIP(sIp);
-	socket.send(text.c_str(), text.length() + 1, sendIP, 2000);
-	cout << 3;
+	//Server side update
 
-	count_connections++;
-	IpAddress tempIp;
-	unsigned short tempPort;
-	socket.receive(buffer, sizeof(buffer), received, tempIp, tempPort);
-	if (received > 0)
+	Vector2f g1Position, g1Prev, g2Position, g2Prev, kPosition, kPrev;
+	while (true) // do testow
 	{
-		cout << 4;
-		if (count_connections == 1)
+		g1Prev = gracz1->getPosition();
+		g2Position = gracz2->getPosition();
+		g2Prev = g2Position;
+		kPosition = krazek->getPosition();
+		kPrev = kPosition;
+		socket.receive(packet, ipClient, portClient);
+		if (packet >> g2Position.x >> g2Position.y >> kPosition.x >> kPosition.y)
 		{
-			cout << "Connected";
+			//if (kPrevious != kPosition) krazek->move(kPosition);
+			if (g2Prev != g2Position) gracz2->move(g2Position); //????? sprawdzic to czy move czy set
 		}
-		else
-			cout << "Received " << buffer << endl;
-
+		window->pollEvent(event);
+		if (event.type == Event::MouseMoved)
+			g1Position = Vector2f(event.mouseMove.x, event.mouseMove.y);
+		if (g1Prev != g1Position) //ruch g1
+		{
+			packet << g1Position.x << g1Position.y << kPosition.x << kPosition.y;
+			gracz1->move(g1Position);
+			socket.send(packet, ipClient, portClient); // ktory port?
+		}
 	}
+}
 
-	map<unsigned short, IpAddress>::iterator tempIterator;
+void Connection::isClient(CircleShape* gracz1, CircleShape* gracz2, CircleShape* krazek, RenderWindow * window)
+{
 
-	for (tempIterator = computerID.begin(); tempIterator != computerID.end(); tempIterator++)
+	IpAddress ipServer;
+	UdpSocket socket;
+	unsigned short portServer = 54321;
+	unsigned short portClient = 54322;
+	Packet packet, startPacket;
+	Event event;
+
+	cout << "Podaj ip servera" << endl;
+	cin >> ipServer;
+	socket.bind(portClient);
+	Uint8 recived, sent;
+	bool flag = true;
+	do
 	{
-		socket.send(text.c_str(), text.length() + 1, tempIterator->second, tempIterator->first);
+		sent = 1;
+		socket.send(startPacket, ipServer, portServer);
+		socket.receive(startPacket, ipServer, portServer);
+		if (startPacket >> recived && recived == 2)
+		{
+			flag = false; //moze sie zmienic
+						  //break;
+		}
+	} while (flag);
+
+	Vector2f g1Position, g1Prev, g2Position, g2Prev, kPosition, kPrev;
+	while (true) // do testu
+	{
+		g2Prev = gracz2->getPosition();
+		g1Position = gracz1->getPosition();
+		g1Prev = g1Position;
+		kPosition = krazek->getPosition();
+		kPrev = kPosition;
+		socket.receive(packet, ipServer, portServer);
+		if (packet >> g1Position.x >> g1Position.y >> kPosition.x >> kPosition.y)
+		{
+			//if (kPrevious != kPosition) krazek->move(kPosition);
+			if (g1Prev != g1Position) gracz1->move(g1Position); //????? sprawdzic to czy move czy set
+		}
+		window->pollEvent(event);
+		if (event.type == Event::MouseMoved)
+			g2Position = Vector2f(event.mouseMove.x, event.mouseMove.y);
+		if (g2Prev != g2Position) //ruch g1
+		{
+			packet << g2Position.x << g2Position.y << kPosition.x << kPosition.y;
+			gracz2->move(g2Position);
+			socket.send(packet, ipServer, portServer);
+		}
 	}
+
 
 }

@@ -2,6 +2,8 @@
 #include<SFML/Graphics.hpp>
 
 
+
+
 sf::Vector2f Kolizje::wyznaczPredkosc(sf::CircleShape* gracz, sf::CircleShape* krazek)
 {
 	
@@ -57,8 +59,3 @@ bool Kolizje::sprawdzKolizje(sf::CircleShape* gracz, sf::CircleShape* krazek)
 	else
 		return false;
 }
-
-
-
-
-

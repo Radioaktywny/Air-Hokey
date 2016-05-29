@@ -1,24 +1,25 @@
-#include "MenuGlowne.h"
-#include<SFML/Graphics.hpp>
+#include "ConnectionMenu.h"
+#include <SFML/Graphics.hpp>
 
 
-MenuGlowne::MenuGlowne()
+
+ConnectionMenu::ConnectionMenu()
 {
 }
 
 
-MenuGlowne::~MenuGlowne()
+ConnectionMenu::~ConnectionMenu()
 {
 }
 
-std::string MenuGlowne::run(sf::RenderWindow * window, sf::Font *font)
+std::string ConnectionMenu::run(sf::RenderWindow *window, sf::Font * font)
 {
-	sf::Text title("AIR_HOCKEY", *font, 80);//tytu³
+	sf::Text title("RODZAJ POLACZENIA", *font, 80);//tytu³
 	title.setStyle(sf::Text::Bold);
 	title.setPosition(1600 / 2 - title.getGlobalBounds().width / 2, 20);
-	const int ile = 3;
+	const int ile = 4;
 	sf::Text tekst[ile]; // teksty przycisków
-	std::string str[] = { "SinglePlayer" , "MultiPlayer", "Exit" };
+	std::string str[] = { "Server", "Client" , "Back to Menu" ,"Exit" };
 	for (int i = 0; i < ile; i++)
 	{
 		tekst[i].setFont(*font);
@@ -36,28 +37,30 @@ std::string MenuGlowne::run(sf::RenderWindow * window, sf::Font *font)
 		{
 			//Wciœniêcie ESC 
 			if (event.type == sf::Event::Closed || event.type == sf::Event::KeyPressed &&
-				event.key.code == sf::Keyboard::Escape)
-				//state = END;
-			return "END";
-			//klikniêcie Singleplayer
+				event.key.code == sf::Keyboard::Escape) return "END";
+			//bedzie tworzyl server
 			else if (tekst[0].getGlobalBounds().contains(mouse) &&
 				event.type == sf::Event::MouseButtonReleased && event.key.code == sf::Mouse::Left)
 			{
-				//state = END;
-				//state = GAME_SINGLE;
-				return "GAME_SINGLE";
+				return "SERVER";
 			}
-			//klikniêcie Multiplayer
+			//bedzie dolaczal
 			else if (tekst[1].getGlobalBounds().contains(mouse) &&
 				event.type == sf::Event::MouseButtonReleased && event.key.code == sf::Mouse::Left)
-			{
-				//	state = GAME_MULTI;
-				return "CONN_MULTI";
-			}//klikniêcie Exit
+			{;
+				return "CLIENT";
+			}
+			//powrot do glownego
 			else if (tekst[2].getGlobalBounds().contains(mouse) &&
 				event.type == sf::Event::MouseButtonReleased && event.key.code == sf::Mouse::Left)
 			{
 				//state = END;
+				return "MENU";
+			}
+			//klikniêcie Exit
+			else if (tekst[3].getGlobalBounds().contains(mouse) &&
+				event.type == sf::Event::MouseButtonReleased && event.key.code == sf::Mouse::Left)
+			{
 				return "END";
 			}
 		}
@@ -67,7 +70,9 @@ std::string MenuGlowne::run(sf::RenderWindow * window, sf::Font *font)
 			if (tekst[i].getGlobalBounds().contains(mouse))
 				tekst[i].setColor(sf::Color::Red);
 			else tekst[i].setColor(sf::Color::White);
+
 			window->clear();
+
 			window->draw(title);
 			for (int i = 0; i < ile; i++)
 				window->draw(tekst[i]);

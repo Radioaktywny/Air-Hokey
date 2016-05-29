@@ -40,12 +40,12 @@ void Score::SetScore(int i)
 {	
 	if (i == 0)
 	{
-		lewa++;
-		
+	
+		prawa++;
 	}
 	else
 	{
-		prawa++;
+		lewa++;	
 	}
 	tekst[0].setString(std::to_string(lewa));
 	tekst[2].setString(std::to_string(prawa));
@@ -68,9 +68,9 @@ void Score::rysuj(sf::RenderWindow * window)
 
 std::string Score::kto_wygral()
 {
-	if(this->lewa > this->prawa)
+	if(this->lewa < this->prawa)
 	return "lewa";
-	if (this->lewa < this->prawa)
+	if (this->lewa > this->prawa)
 	return "prawa";
 }
 

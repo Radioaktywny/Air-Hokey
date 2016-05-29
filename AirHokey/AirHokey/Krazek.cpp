@@ -21,7 +21,7 @@ void Krazek::init()
 	krazek.setPosition(this->start);
 	krazek.setRadius(30);
 	kierunek = sf::Vector2f(0, 0);
-	maxpredkosc = 5.0f;
+	maxpredkosc = 2.0f;
 }
 
 Krazek::~Krazek()

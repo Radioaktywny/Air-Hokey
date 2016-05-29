@@ -20,6 +20,6 @@ private:
 	sf::Sprite sprite_goal;
 	void laduj_goal();
 	sf::Texture image;
-	int koniec_gry = 5;
+	int koniec_gry = 2; // koniec gry po tylu punktach
 };
 

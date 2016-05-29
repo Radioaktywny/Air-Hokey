@@ -5,6 +5,7 @@
 #include "Plansza.h"
 #include "Gracz.h"
 #include "Krazek.h"
+#include "Connection.h"
 
 using namespace std;
 using namespace sf;
@@ -22,6 +23,7 @@ protected:
 	enum MultiType { SERVER, CLIENT};
 	MenuState state;
 	MultiType multiType;
+	Connection connect;
 
 private:
 	Font font;

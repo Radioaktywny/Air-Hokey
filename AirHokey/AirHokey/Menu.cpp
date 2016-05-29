@@ -1,6 +1,6 @@
-#include<SFML/Graphics.hpp>
-#include<string>
-#include<iostream>
+#include <SFML/Graphics.hpp>
+#include <string>
+#include <iostream>
 #include <iomanip>
 #include "Plansza.h"
 #include "Gracz.h"
@@ -276,7 +276,16 @@ void Menu::Multiplayer()
 	Time ups = seconds(1.f / 60.f);
 	Vector2f myszka(0, 0);
 	Clock clock;
+	IpAddress ipAddress = IpAddress::getLocalAddress();
+	UdpSocket socket;
+	unsigned short portServer = 54321;
+	unsigned short portClient = 54322;
+	Packet packet, receivePacket, sendPacket;
 	window.setMouseCursorVisible(false);
+	int mouseMoveX;
+	int mouseMoveY;
+	bool flag = true;
+	bool bind = false;
 
 	while (state == GAME_MULTI)
 	{
@@ -306,11 +315,50 @@ void Menu::Multiplayer()
 		switch (multiType)
 		{
 			case MultiType::SERVER:
-				/*
-				TU GACU BARANIE JEDEN WSADZISZ SWOJE POSRANE UDP DLA SERVA
+			{
+				if (!bind)
+				{
+					socket.bind(portServer);
+					bind = true;
+					cout << "binduje";
+				}
+				string recive, sent;
+				sent = "hello client";
+
+				while (flag)
+				{
+					socket.receive(receivePacket, ipAddress, portClient);
+					if (receivePacket >> recive && recive == "hello server")
+					{
+						flag = false;
+						sendPacket << sent;
+						socket.send(sendPacket, ipAddress, portClient);
+						receivePacket.clear();
+						sendPacket.clear();
+						cout << "styklo";
+					}
+				} 
+
+				cout << "stacja 1" << endl;
+
+				gracz.move(Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
+				sendPacket << eventSF.mouseMove.x << eventSF.mouseMove.y;
+				socket.send(sendPacket, ipAddress, portClient);
+				sendPacket.clear();
+
+				socket.receive(receivePacket, ipAddress, portClient);
+				while ((receivePacket >> mouseMoveX >> mouseMoveY && receivePacket != NULL))
+				{
+					gracz2.move(Vector2f(mouseMoveX, mouseMoveY));
+					cout << "stacja 2" << endl;
+					receivePacket.clear();
+				} 
+
 				
-				*/
-				gracz.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
+
+				
+				cout << "stacja 3" << endl;
+				
 
 				if (Kolizje::sprawdzKolizje(&gracz.getShape(), &krazek.zwroc()))
 				{
@@ -318,20 +366,55 @@ void Menu::Multiplayer()
 					krazek.setPredkosc(odbicie);
 				}
 				break;
+			}
 			case MultiType::CLIENT:
-				/*
-				A TU DLA KLIENTA MA£PO JEDNA Z ZAKONU SPO£ECZNYCH DEGENERATOW
-				*/
-				gracz2.move(sf::Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y)); 
+			{
+				if (!bind)
+				{
+					socket.bind(portClient);
+					bind = true;
+					cout << "binduje";
+				}
+				string recive, sent;
+				sent = "hello server";
+				sendPacket << sent;
+				while (flag)
+				{
+					socket.send(sendPacket, ipAddress, portServer);
+					socket.receive(receivePacket, ipAddress, portServer);
+					if (receivePacket >> recive && recive == "hello client")
+					{
+						flag = false;
+						receivePacket.clear();
+						sendPacket.clear();
+						cout << "styklo";
+					}
+				} 
 
+				cout << "stacja 1"<<endl;
+				socket.receive(sendPacket, ipAddress, portClient);
+				while (sendPacket >> mouseMoveX >> mouseMoveY && sendPacket != NULL)
+				{
+					gracz.move(Vector2f(mouseMoveX, mouseMoveY));
+					cout << "stacja 2" << endl;
+					sendPacket.clear();
+				} 
+				cout << "stacja 3" << endl;
+				
+				gracz2.move(Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
+				receivePacket << eventSF.mouseMove.x << eventSF.mouseMove.y;
+				socket.send(receivePacket, ipAddress, portClient);
+				receivePacket.clear();
+				
+				cout << "stacja 4" << endl;
 				if (Kolizje::sprawdzKolizje(&gracz2.getShape(), &krazek.zwroc()))
 				{
 					Vector2f odbicie = Kolizje::wyznaczPredkosc(&gracz2.getShape(), &krazek.zwroc());
 					krazek.setPredkosc(odbicie);
 				}
 				break;
+			}
 		}
-
 		krazek.move();
 		plansza.czyWplanszy(&krazek);
 		while (accumulator > ups)

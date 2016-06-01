@@ -11,6 +11,9 @@
 #include "Menu.h"
 #include "Kolizje.h"
 #include "Score.h"
+#include <thread>
+#include <future>
+
 
 
 
@@ -24,8 +27,45 @@ Multiplayer::~Multiplayer()
 {
 }
 
+string Multiplayer::eventsManage(sf::RenderWindow * window, sf::Event eventSF)
+{
+	
+	while (window->pollEvent(eventSF))
+	{
+		switch (eventSF.type)
+		{
+		case sf::Event::Closed:
+			window->close();
+			break;
+		case Event::KeyPressed:
+			if (eventSF.key.code == Keyboard::Escape)
+			{
+				window->setMouseCursorVisible(true);
+				return "MENU";
+				window->close();
+			}
+			break;
+		case Event::MouseMoved:
+			break;
+		}
+	}
+	throw std::exception("Exception from task!");
+	return "";
+}
 
+Text Multiplayer::mojBaton(string text, sf::Font *font)
+{
+	sf::Text clickStart(text, *font, 45);
+	clickStart.setStyle(sf::Text::Bold);
+	clickStart.setColor(Color::Black);
+	clickStart.setPosition(1600 / 2 - clickStart.getGlobalBounds().width / 2, 200);
+	return clickStart;
+}
 
+string Multiplayer::funkcja()
+{
+	return "";
+}
 string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *wygral, std::string state)
 {
 	
@@ -45,49 +85,59 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 	unsigned short portServer = 54321;
 	unsigned short portClient = 54322;
 	sf::Packet packet, receivePacket, sendPacket;
-	int mouseMoveX;
-	int mouseMoveY;
+	int mouseMoveX, mouseMoveY;
 	bool flag = true;
 	bool bind = false;
 	sf::Event eventSF;
+	window->pollEvent(eventSF);
 
 	while (true)
 	{
-		while (window->pollEvent(eventSF))
-		{
-			switch (eventSF.type)
-			{
-			case sf::Event::Closed:
-				window->close();
-				break;
-			case Event::KeyPressed:
-				if (eventSF.key.code == Keyboard::Escape)
-				{
-					window->setMouseCursorVisible(true);
-					return "MENU";
-				}
-				break;
-			case Event::MouseMoved:
-				break;
-			}
-		}
-
+		if (eventsManage(window, eventSF) == "MENU")
+			return "MENU";
+			
 		if (state == "SERVER")
 		{
 			if (!bind)
 			{
 				socket.bind(portServer);
 				bind = true;
-				std::cout << "binduje";
 			}
-			string recive, sent;
-			sent = "hello client";
+
+			int recive, sent;
+			sent = 69;
 
 			while (flag)
 			{
-				socket.receive(receivePacket, ipAddress, portClient); // autobind adresu clienta
-				if (receivePacket >> recive && recive == "hello server")
+				auto task = std::async(&funkcja);
+				try
 				{
+					if (task.get == "MENU")
+				}
+				catch (std::exception & e)
+				{
+					std::cout << "sdads" << endl;
+				}
+				
+					return "MENU";
+				/*window->clear();
+				server.setPosition(200, 430);
+				client.setPosition(1400, 430);
+				plansza.rysuj(window);
+				krazek.rysuj(window);
+				server.rysuj(window);
+				client.rysuj(window);
+				window->draw(mojBaton("Waiting for client to connect", font));
+				window->display();*/
+				//// tu musi byc wateczek
+				socket.receive(receivePacket, ipAddress, portClient); // autobind adresu clienta
+				if (receivePacket >> recive && recive == 69)
+				{
+					/*window->draw(mojBaton("Client connected. Click to start", font));
+					window->display();*/
+					
+					/*if (clickStart.getGlobalBounds().contains(myszka) &&
+						eventSF.type == sf::Event::MouseButtonReleased && eventSF.key.code == sf::Mouse::Left);*/
 					flag = false;
 					sendPacket << sent;
 					socket.send(sendPacket, ipAddress, portClient);
@@ -96,8 +146,6 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 					std::cout << "styklo";
 				}
 			}
-
-			std::cout << "stacja 1" << endl;
 
 			server.move(Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
 			sendPacket << eventSF.mouseMove.x << eventSF.mouseMove.y;
@@ -108,11 +156,8 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 			while ((receivePacket >> mouseMoveX >> mouseMoveY && receivePacket != NULL))
 			{
 				client.move(Vector2f(mouseMoveX, mouseMoveY));
-				std::cout << "stacja 2" << endl;
 				receivePacket.clear();
 			}
-
-			std::cout << "stacja 3" << endl;
 
 			if (Kolizje::sprawdzKolizje(&server.getShape(), &krazek.zwroc()))
 			{
@@ -127,16 +172,25 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 			{
 				socket.bind(portClient);
 				bind = true;
-				cout << "binduje";
 			}
-			string recive, sent;
-			sent = "hello server";
+			int recive, sent;
+			sent = 69;
 			sendPacket << sent;
 			while (flag)
 			{
+				/*window->clear();
+				server.setPosition(200, 430);
+				client.setPosition(1400, 430);
+				plansza.rysuj(window);
+				krazek.rysuj(window);
+				server.rysuj(window);
+				client.rysuj(window);
+				window->draw(mojBaton("Waiting for client to connect", font));
+				window->display();*/
+
 				socket.send(sendPacket, ipAddress, portServer);
 				socket.receive(receivePacket, ipAddress, portServer);
-				if (receivePacket >> recive && recive == "hello client")
+				if (receivePacket >> recive && recive == 69)
 				{
 					flag = false;
 					receivePacket.clear();
@@ -145,21 +199,18 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 				}
 			}
 
-			cout << "stacja 1" << endl;
 			socket.receive(sendPacket, ipAddress, portClient);
 			while (sendPacket >> mouseMoveX >> mouseMoveY && sendPacket != NULL)
 			{
 				server.move(Vector2f(mouseMoveX, mouseMoveY));
-				cout << "stacja 2" << endl;
 				sendPacket.clear();
 			}
-			cout << "stacja 3" << endl;
 
 			client.move(Vector2f(eventSF.mouseMove.x, eventSF.mouseMove.y));
 			receivePacket << eventSF.mouseMove.x << eventSF.mouseMove.y;
 			socket.send(receivePacket, ipAddress, portClient);
 			receivePacket.clear();
-			cout << "stacja 4" << endl;
+
 			if (Kolizje::sprawdzKolizje(&client.getShape(), &krazek.zwroc()))
 			{
 				Vector2f odbicie = Kolizje::wyznaczPredkosc(&client.getShape(), &krazek.zwroc());

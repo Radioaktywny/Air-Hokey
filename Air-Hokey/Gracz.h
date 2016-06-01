@@ -10,6 +10,7 @@ public:
 	void rysuj(sf::RenderWindow * window);
 	sf::Vector2f getKierunek();
 	sf::CircleShape getShape();
+	void setPosition(int x, int y);
 
 private:
 	sf::CircleShape krazek;

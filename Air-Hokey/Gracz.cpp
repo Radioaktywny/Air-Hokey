@@ -1,10 +1,11 @@
 #include "Gracz.h"
 #include "SFML/Graphics.hpp"
+#include <iostream>
 Gracz::Gracz()
 {
 	this->krazek.setFillColor(sf::Color::Blue);
 	this->krazek.setRadius(40);
-	this->krazek.setPosition(100, 100);
+	//this->krazek.setPosition(100, 100);
 }
 
 Gracz::~Gracz()
@@ -16,10 +17,10 @@ void Gracz::move(sf::Vector2f dir)
 	this->kierunek = dir - krazek.getPosition();
 	this->kierunek=sf::Vector2f(kierunek.x-krazek.getRadius(),kierunek.y-krazek.getRadius());
 	float predkosc = sqrtf((kierunek.x*kierunek.x) +( kierunek.y*kierunek.y));
-	if (predkosc > 5)
+	if (predkosc > 2)
 	{
-		kierunek.x = 5*kierunek.x/predkosc;
-		kierunek.y = 5 *kierunek.y / predkosc;
+		kierunek.x = 2*kierunek.x/predkosc;
+		kierunek.y = 2 *kierunek.y / predkosc;
 	}
 	krazek.move(kierunek.x , kierunek.y);
 }
@@ -38,3 +39,9 @@ sf::CircleShape Gracz::getShape()
 {
 	return this->krazek;
 }
+
+void Gracz::setPosition(int x, int y)
+{
+	this->krazek.setPosition(x, y);
+}
+

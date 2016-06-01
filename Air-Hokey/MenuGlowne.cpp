@@ -34,7 +34,7 @@ std::string MenuGlowne::run(sf::RenderWindow * window, sf::Font *font)
 
 		while (window->pollEvent(event))
 		{
-			//Wciœniêcie ESC 
+			//Wciœniêcie ESC
 			if (event.type == sf::Event::Closed || event.type == sf::Event::KeyPressed &&
 				event.key.code == sf::Keyboard::Escape)
 				//state = END;

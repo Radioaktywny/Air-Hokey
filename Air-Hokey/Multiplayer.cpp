@@ -1,6 +1,7 @@
 #include "Multiplayer.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
+#include <SFML/System.hpp>
 #include <string>
 #include <iostream>
 #include <iomanip>
@@ -27,7 +28,7 @@ Multiplayer::~Multiplayer()
 {
 }
 
-string Multiplayer::eventsManage(sf::RenderWindow * window, sf::Event eventSF)
+void Multiplayer::eventsManage(sf::RenderWindow * window, sf::Event eventSF)
 {
 	
 	while (window->pollEvent(eventSF))
@@ -41,7 +42,7 @@ string Multiplayer::eventsManage(sf::RenderWindow * window, sf::Event eventSF)
 			if (eventSF.key.code == Keyboard::Escape)
 			{
 				window->setMouseCursorVisible(true);
-				return "MENU";
+			//	return "MENU";
 				window->close();
 			}
 			break;
@@ -49,8 +50,7 @@ string Multiplayer::eventsManage(sf::RenderWindow * window, sf::Event eventSF)
 			break;
 		}
 	}
-	throw std::exception("Exception from task!");
-	return "";
+	//return "";
 }
 
 Text Multiplayer::mojBaton(string text, sf::Font *font)
@@ -62,9 +62,9 @@ Text Multiplayer::mojBaton(string text, sf::Font *font)
 	return clickStart;
 }
 
-string Multiplayer::funkcja()
+void Multiplayer::funkcja()
 {
-	return "";
+	//return "";
 }
 string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *wygral, std::string state)
 {
@@ -93,8 +93,8 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 
 	while (true)
 	{
-		if (eventsManage(window, eventSF) == "MENU")
-			return "MENU";
+		//if (eventsManage(window, eventSF) == "MENU")
+		//	return "MENU";
 			
 		if (state == "SERVER")
 		{
@@ -109,18 +109,10 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 
 			while (flag)
 			{
-				auto task = std::async(&funkcja);
-				try
-				{
-					if (task.get == "MENU")
-				}
-				catch (std::exception & e)
-				{
-					std::cout << "sdads" << endl;
-				}
-				
-					return "MENU";
-				/*window->clear();
+				//std::thread t1(&Multiplayer::eventsManage,window,eventSF);
+
+
+				window->clear();
 				server.setPosition(200, 430);
 				client.setPosition(1400, 430);
 				plansza.rysuj(window);
@@ -128,7 +120,7 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 				server.rysuj(window);
 				client.rysuj(window);
 				window->draw(mojBaton("Waiting for client to connect", font));
-				window->display();*/
+				window->display();
 				//// tu musi byc wateczek
 				socket.receive(receivePacket, ipAddress, portClient); // autobind adresu clienta
 				if (receivePacket >> recive && recive == 69)
@@ -136,8 +128,6 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 					/*window->draw(mojBaton("Client connected. Click to start", font));
 					window->display();*/
 					
-					/*if (clickStart.getGlobalBounds().contains(myszka) &&
-						eventSF.type == sf::Event::MouseButtonReleased && eventSF.key.code == sf::Mouse::Left);*/
 					flag = false;
 					sendPacket << sent;
 					socket.send(sendPacket, ipAddress, portClient);
@@ -178,7 +168,7 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 			sendPacket << sent;
 			while (flag)
 			{
-				/*window->clear();
+				window->clear();
 				server.setPosition(200, 430);
 				client.setPosition(1400, 430);
 				plansza.rysuj(window);
@@ -186,7 +176,7 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 				server.rysuj(window);
 				client.rysuj(window);
 				window->draw(mojBaton("Waiting for client to connect", font));
-				window->display();*/
+				window->display();
 
 				socket.send(sendPacket, ipAddress, portServer);
 				socket.receive(receivePacket, ipAddress, portServer);

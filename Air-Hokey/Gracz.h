@@ -5,6 +5,7 @@ class Gracz
 {
 public:
 	Gracz();
+	Gracz(sf::Color kolor);
 	~Gracz();
 	void move(sf::Vector2f dir);
 	void rysuj(sf::RenderWindow * window);

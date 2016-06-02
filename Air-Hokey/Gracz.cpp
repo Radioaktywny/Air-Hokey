@@ -7,6 +7,12 @@ Gracz::Gracz()
 	this->krazek.setRadius(40);
 	//this->krazek.setPosition(100, 100);
 }
+Gracz::Gracz(sf::Color kolor)
+{
+	this->krazek.setFillColor(kolor);
+	this->krazek.setRadius(40);
+	//this->krazek.setPosition(100, 100);
+}
 
 Gracz::~Gracz()
 {

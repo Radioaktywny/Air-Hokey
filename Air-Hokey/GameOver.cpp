@@ -13,7 +13,7 @@ GameOver::~GameOver()
 
 
 
-std::string GameOver::run(sf::RenderWindow *window ,  sf::Font * font, std::string * wygral)
+std::string GameOver::run(sf::RenderWindow *window ,  sf::Font * font, std::string * wygral, std::string type)
 {
 	sf::Text title(*wygral, *font, 80);//tytu³
 	title.setStyle(sf::Text::Bold);
@@ -21,6 +21,7 @@ std::string GameOver::run(sf::RenderWindow *window ,  sf::Font * font, std::stri
 	const int ile = 3;
 	sf::Text tekst[ile]; // teksty przycisków
 	std::string str[] = { "Try again" , "Back to Menu" ,"Exit" };
+	
 	for (int i = 0; i < ile; i++)
 	{
 		tekst[i].setFont(*font);
@@ -45,7 +46,10 @@ std::string GameOver::run(sf::RenderWindow *window ,  sf::Font * font, std::stri
 				event.type == sf::Event::MouseButtonReleased && event.key.code == sf::Mouse::Left)
 			{
 				//state = END;
-				return "GAME_SINGLE";
+				if (type == "single")
+					return "GAME_SINGLE";
+				else if(type == "multi")
+					return "CONN_MULTI";
 			}//klikniêcie Back to Menu
 			else if (tekst[1].getGlobalBounds().contains(mouse) &&
 				event.type == sf::Event::MouseButtonReleased && event.key.code == sf::Mouse::Left)

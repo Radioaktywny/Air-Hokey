@@ -16,7 +16,7 @@ public:
 	void runMenu();
 
 protected:
-	enum MenuState { MENU, GAME_SINGLE, GAME_MULTI, GAME_OVER, END , CONN_MULTI, SERVER, CLIENT, };
+	enum MenuState { MENU, GAME_SINGLE, GAME_MULTI, GAME_OVER, GAME_OVER_MULTI, END , CONN_MULTI, SERVER, CLIENT, };
 	MenuState state;
 
 private:
@@ -24,7 +24,7 @@ private:
 	string wygral;
 	void singleplayer();
 	void menuGlowne();
-	void menuKoniecGry();
+	void menuKoniecGry(string type);
 	void menuPolaczenieMulti();
 	void state_update(String bedzie);
 	void multiplayerServer();

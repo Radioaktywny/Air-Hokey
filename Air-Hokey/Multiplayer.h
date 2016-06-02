@@ -6,11 +6,17 @@ using namespace::sf;
 class Multiplayer
 {
 public:
-	Multiplayer();
+	Multiplayer(sf::RenderWindow * window, sf::Font *font, std::string *wygral, std::string state);
 	~Multiplayer();
-	void eventsManage(sf::RenderWindow * window, sf::Event eventSF);
-	sf::Text mojBaton(string text, sf::Font *font);
-	void funkcja();
-	string run(sf::RenderWindow * window, sf::Font * font, std::string * wygral, std::string state);
+	string eventsManage(sf::RenderWindow * window, sf::Event eventSF);
+	Text mojBaton(string text);
+	string funkcja(int pyk);
+	string run();
+private:
+	RenderWindow * window;
+	Font *font;
+	Event eventSF;
+	string *wygral;
+	string state;
 };
 

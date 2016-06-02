@@ -12,26 +12,27 @@
 #include "Menu.h"
 #include "Kolizje.h"
 #include "Score.h"
-#include <thread>
+//#include <thread>
 #include <future>
 
 
+using namespace sf;
 
-
-Multiplayer::Multiplayer()
+Multiplayer::Multiplayer(RenderWindow * window, Font *font, string *wygral, string state)
 {
+	this->window = window;
+	this->font = font;
+	this->wygral = wygral;
+	this->state = state;
 }
-
-
 
 Multiplayer::~Multiplayer()
 {
 }
 
-void Multiplayer::eventsManage(sf::RenderWindow * window, sf::Event eventSF)
+string Multiplayer::eventsManage(sf::RenderWindow * window, sf::Event eventSF)
 {
-	
-	while (window->pollEvent(eventSF))
+	while (window->pollEvent(this->eventSF))
 	{
 		switch (eventSF.type)
 		{
@@ -42,7 +43,7 @@ void Multiplayer::eventsManage(sf::RenderWindow * window, sf::Event eventSF)
 			if (eventSF.key.code == Keyboard::Escape)
 			{
 				window->setMouseCursorVisible(true);
-			//	return "MENU";
+				return "MENU";
 				window->close();
 			}
 			break;
@@ -50,10 +51,10 @@ void Multiplayer::eventsManage(sf::RenderWindow * window, sf::Event eventSF)
 			break;
 		}
 	}
-	//return "";
+	return "";
 }
 
-Text Multiplayer::mojBaton(string text, sf::Font *font)
+Text Multiplayer::mojBaton(string text)
 {
 	sf::Text clickStart(text, *font, 45);
 	clickStart.setStyle(sf::Text::Bold);
@@ -62,14 +63,14 @@ Text Multiplayer::mojBaton(string text, sf::Font *font)
 	return clickStart;
 }
 
-void Multiplayer::funkcja()
+string Multiplayer::funkcja(int pyk)
 {
-	//return "";
+	return "";
 }
-string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *wygral, std::string state)
+string Multiplayer::run()
 {
-	
-	window->setMouseCursorVisible(false);
+	this->window->setMouseCursorVisible(false);
+	this->window->setFramerateLimit(120);
 	Score wynik(font);
 	int szerokosc = 1500;
 	int wysokosc = 600;
@@ -89,13 +90,18 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 	bool flag = true;
 	bool bind = false;
 	sf::Event eventSF;
-	window->pollEvent(eventSF);
-
+	string client_score = "prawa";
+	string server_score = "lewa";
+	
+	
 	while (true)
 	{
-		//if (eventsManage(window, eventSF) == "MENU")
-		//	return "MENU";
-			
+		this->window->pollEvent(eventSF);
+		
+		if (eventsManage(window, eventSF) == "MENU")
+			return "MENU";
+		
+		
 		if (state == "SERVER")
 		{
 			if (!bind)
@@ -104,14 +110,18 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 				bind = true;
 			}
 
+			if (wynik.czy_koniec() == "koniec")
+			{
+				wynik.wyznaczWygranego(&client_score, wygral);
+				window->setMouseCursorVisible(true);
+				return "GAME_OVER_MULTI";
+			}
+
 			int recive, sent;
 			sent = 69;
 
 			while (flag)
 			{
-				//std::thread t1(&Multiplayer::eventsManage,window,eventSF);
-
-
 				window->clear();
 				server.setPosition(200, 430);
 				client.setPosition(1400, 430);
@@ -119,21 +129,17 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 				krazek.rysuj(window);
 				server.rysuj(window);
 				client.rysuj(window);
-				window->draw(mojBaton("Waiting for client to connect", font));
+				window->draw(mojBaton("Waiting for client to connect"));
 				window->display();
-				//// tu musi byc wateczek
-				socket.receive(receivePacket, ipAddress, portClient); // autobind adresu clienta
+
+				socket.receive(receivePacket, ipAddress, portClient); 
 				if (receivePacket >> recive && recive == 69)
 				{
-					/*window->draw(mojBaton("Client connected. Click to start", font));
-					window->display();*/
-					
 					flag = false;
 					sendPacket << sent;
 					socket.send(sendPacket, ipAddress, portClient);
 					receivePacket.clear();
 					sendPacket.clear();
-					std::cout << "styklo";
 				}
 			}
 
@@ -151,8 +157,11 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 
 			if (Kolizje::sprawdzKolizje(&server.getShape(), &krazek.zwroc()))
 			{
-				Vector2f odbicie = Kolizje::wyznaczPredkosc(&server.getShape(), &krazek.zwroc());
-				krazek.setPredkosc(odbicie);
+				krazek.setPredkosc(Kolizje::wyznaczPredkosc(&server.getShape(), &krazek.zwroc()));
+			}
+			else if (Kolizje::sprawdzKolizje(&client.getShape(), &krazek.zwroc()))
+			{
+				krazek.setPredkosc(Kolizje::wyznaczPredkosc(&client.getShape(), &krazek.zwroc()));
 			}
 		}
 
@@ -163,6 +172,14 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 				socket.bind(portClient);
 				bind = true;
 			}
+
+			if (wynik.czy_koniec() == "koniec")
+			{
+				wynik.wyznaczWygranego(&server_score, wygral);
+				window->setMouseCursorVisible(true);
+				return "GAME_OVER_MULTI";
+			}
+
 			int recive, sent;
 			sent = 69;
 			sendPacket << sent;
@@ -175,7 +192,7 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 				krazek.rysuj(window);
 				server.rysuj(window);
 				client.rysuj(window);
-				window->draw(mojBaton("Waiting for client to connect", font));
+				window->draw(mojBaton("Waiting for server to connect"));
 				window->display();
 
 				socket.send(sendPacket, ipAddress, portServer);
@@ -185,7 +202,6 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 					flag = false;
 					receivePacket.clear();
 					sendPacket.clear();
-					cout << "styklo";
 				}
 			}
 
@@ -203,26 +219,43 @@ string Multiplayer::run(sf::RenderWindow * window, sf::Font *font, std::string *
 
 			if (Kolizje::sprawdzKolizje(&client.getShape(), &krazek.zwroc()))
 			{
-				Vector2f odbicie = Kolizje::wyznaczPredkosc(&client.getShape(), &krazek.zwroc());
-				krazek.setPredkosc(odbicie);
+				krazek.setPredkosc(Kolizje::wyznaczPredkosc(&client.getShape(), &krazek.zwroc()));
+			}
+			else if (Kolizje::sprawdzKolizje(&server.getShape(), &krazek.zwroc()))
+			{
+				krazek.setPredkosc(Kolizje::wyznaczPredkosc(&server.getShape(), &krazek.zwroc()));
 			}
 		}
 
-		krazek.move();
-		plansza.czyWplanszy(&krazek);
-		while (accumulator > ups)
+		int sprawdz = plansza.czyWplanszy(&krazek);
+
+		if (sprawdz == 1)
 		{
-			accumulator -= ups;
+			wynik.SetScore(0);	// klient
+		}
+		else if (sprawdz == 2) 
+		{
+			wynik.SetScore(1); // serwer
+		}
+		else
+		{
+			krazek.move();
+		}
+
+		//while (accumulator > ups)
+		//{
+			//accumulator -= ups;
 			window->clear();
 			plansza.rysuj(window);
 			krazek.rysuj(window);
 			server.rysuj(window);
 			client.rysuj(window);
+			wynik.rysuj(window);
 			window->display();
-		}
-		accumulator += clock.restart();
+		//}
+		//accumulator += clock.restart();
 	}
 
-	return "GAME_OVER";
+	return "GAME_OVER_MULTI";
 }
 

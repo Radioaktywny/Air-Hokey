@@ -14,6 +14,7 @@
 #include "MenuGlowne.h"
 #include "ConnectionMenu.h"
 #include "Multiplayer.h"
+#include <thread>
 
 sf::RenderWindow window(sf::VideoMode(1600, 900), "Hockey", sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize);
 
@@ -58,7 +59,13 @@ void Menu::runMenu()
 		case MenuState::GAME_OVER:
 			//odpala Koniec Gry
 			cout << "Odpalam Gameover" << endl;
-			menuKoniecGry();
+			menuKoniecGry("single");
+			break;
+
+		case MenuState::GAME_OVER_MULTI:
+			//odpala Koniec Gry
+			cout << "Odpalam Gameover multi" << endl;
+			menuKoniecGry("multi");
 			break;
 
 		case MenuState::SERVER:
@@ -91,10 +98,10 @@ void Menu::menuPolaczenieMulti()
 	state_update(bedzie);
 }
 
-void Menu::menuKoniecGry()
+void Menu::menuKoniecGry(string type)
 {
 	GameOver over;
-	String bedzie = over.run(&window, &font, &wygral);
+	String bedzie = over.run(&window, &font, &wygral, type);
 	state_update(bedzie);	
 }
 
@@ -107,15 +114,16 @@ void Menu::singleplayer()
 
 void Menu::multiplayerServer()
 {
-	Multiplayer multiServ;
-	String bedzie = multiServ.run(&window, &font, &wygral, "SERVER");
+	Multiplayer multiServ(&window, &font, &wygral, "SERVER");
+	string bedzie = multiServ.run();
 	state_update(bedzie);
+
 }
 
 void Menu::multiplayerClient()
 {
-	Multiplayer multiCli;
-	String bedzie = multiCli.run(&window, &font, &wygral, "CLIENT");
+	Multiplayer multiCli(&window, &font, &wygral, "CLIENT");
+	string bedzie = multiCli.run();
 	state_update(bedzie);
 }
 
@@ -144,6 +152,10 @@ void Menu::state_update(String bedzie)
 	else if (bedzie == "GAME_OVER")
 	{
 		state = GAME_OVER;
+	}
+	else if (bedzie == "GAME_OVER_MULTI")
+	{
+		state = GAME_OVER_MULTI;
 	}
 	else if (bedzie == "CONN_MULTI")
 	{

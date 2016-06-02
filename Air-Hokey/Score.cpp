@@ -29,12 +29,9 @@ Score::Score(sf::Font * font)
 	}
 }
 
-
 Score::~Score()
 {
 }
-
-
 
 void Score::SetScore(int i)
 {	
@@ -76,13 +73,15 @@ std::string Score::kto_wygral()
 
 void Score::wyznaczWygranego(std::string * bot_strona, std::string * wygral)
 {
+	std::cout << "\niiii: " << *bot_strona << " sdrds " << kto_wygral();
+
 	if (*bot_strona == kto_wygral())
 	{
-		*wygral = "WYGRALES :)";
+		*wygral = "Wygrana :)";
 	}
 	else
 	{
-		*wygral = "PRZEGRALES :(";
+		*wygral = "Przegrana :(";
 	}
 }
 

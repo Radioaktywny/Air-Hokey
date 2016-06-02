@@ -4,7 +4,7 @@ This is a game where 2 players play against each other on a low-friction table. 
 ######[PL]
 Gra zrecznosciowa dla dwóch graczy. Gra przypomina nieco hokej na lodzie. Do gry używany jest specjalny stół, powierzchnia stołu jest pokryta otworami, przez które wydmuchiwane jest powietrze. Powstaje przy tym poduszka powietrzna, na której krążek ślizga się bez kontaktu z podłożem.
 ______________________________
-## How to install: / Proces instalacji
+## How to install: / Proces instalacji:
 ######[EN]
 1. Download repositor to zip or import git project by clone Uri.
 2. Unpack zip or open folder with project.

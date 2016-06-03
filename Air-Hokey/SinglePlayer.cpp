@@ -23,7 +23,7 @@ SinglePlayer::~SinglePlayer()
 
 string SinglePlayer::run(RenderWindow * window , Font *font , string *wygral)
 {
-	window->setMouseCursorVisible(false);
+	window->setMouseCursorVisible(true);
 	window->setFramerateLimit(120);
 	Score wynik(font);
 	int szerokosc = 1500;

@@ -12,6 +12,7 @@ public:
 	void gol(sf::Vector2f srodek);
 	sf::CircleShape zwroc();	
 	void move();
+	void move(sf::Vector2f kierunek);
 private:
 	sf::Vector2f kierunek;
 	float maxpredkosc;

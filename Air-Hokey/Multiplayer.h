@@ -27,6 +27,7 @@ private:
 	int mouseMoveServerY = 430;
 	int mouseMoveClientX = 1400;
 	int mouseMoveClientY = 430;
+	Vector2f krazekP;
 	Packet packet, receivePacket, sendPacket;
 	unsigned short portServer = 54321;
 	unsigned short portClient = 54322;

@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Bot">
+    <Position X="1" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABABEBAgBAgAAACIAAgAAEDQAAIAAAAACAIAgAQAAAA=</HashCode>
+      <FileName>Bot.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Connection">
+    <Position X="8" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAEAACAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Connection.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConnectionMenu">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAQAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ConnectionMenu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameOver">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAggAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameOver.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gracz">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgABAAAgBAAAAACAAAAAAACCAAAAAAAAAAAAQAQAAAA=</HashCode>
+      <FileName>Gracz.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kolizje">
+    <Position X="6.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Kolizje.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Krazek">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAgBAAgAAygIAgQAAAAAAAAAAKAggAAAAAAAAA=</HashCode>
+      <FileName>Krazek.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Menu">
+    <Position X="11.5" Y="2.25" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Menu::MenuState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Menu.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>BAJAAAAAAAJAAQAIAAACAACAAAIIAAAEAAAABAAAAAA=</HashCode>
+      <FileName>Menu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MenuGlowne">
+    <Position X="2.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAEACAAAAAAAAAAA=</HashCode>
+      <FileName>MenuGlowne.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Multiplayer">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAIAAoAIBgAEAJADAAAAQACAAAQAAAAMgAECIGAgEAE=</HashCode>
+      <FileName>Multiplayer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plansza">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAABAgAAAEAAIAAAAAAAAAAQQAAAAQCCAQABAAQAAAA=</HashCode>
+      <FileName>Plansza.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Score">
+    <Position X="9.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABACAAEAAAIAgAAIABBAAAEBAIAwBBAAgAAIAAAAA=</HashCode>
+      <FileName>Score.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SinglePlayer">
+    <Position X="2.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAgAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SinglePlayer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

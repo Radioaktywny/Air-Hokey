@@ -32,6 +32,8 @@ sfml-audio-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-system-d.lib;sfml-w
 sfml-audio-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-system-d.lib;sfml-window-d.lib;opengl32.lib;winmm.lib;gdi32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)
 10. Dodaj wszystkie pliki .dll z folderu SFML-2.3.2/bin do folderu z plikami zródlowymi.
 11. Skompiluj i uruchom projekt.
+
+Alternatywne uruchomienie projektu można wykonać przy użyciu pliku Air-Hokey.exe w folderze /Air-Hokey. Plik .exe należy uruchamiać w tej lokalizacji, z racji tego, iż biblioteki są załączane w sposób dynamiczny.
 ______________________________
 ##Diagramy / Diagrams:
 ######[EN]
@@ -48,7 +50,9 @@ W folderze *\Air-Hokey-master\Air-Hokey\Diagram:
 
 ______________________________
 ##Autorzy / Authors:
-- Marcin Witek,111111111
+- Marcin Witek,
 - Maciej Kulikiewicz,
 - Seweryn Dudek,
 - Bartłomiej Gacek
+
+
